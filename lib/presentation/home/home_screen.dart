@@ -1,4 +1,5 @@
 ﻿import 'package:bodytalk/presentation/home/home_tab_type.dart';
+import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -10,19 +11,19 @@ class HomeScreen extends StatelessWidget {
     return DefaultTabController(
       length: HomeTabType.values.length,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: AppColors.gray50,
         body: Column(
           children: [
             Container(
               padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
               decoration: const BoxDecoration(
-                color: Color(0xFFFEF3C7),
+                color: AppColors.surfaceContainer,
                 borderRadius: BorderRadius.vertical(
                   bottom: Radius.circular(32),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: AppColors.black12,
                     blurRadius: 4,
                     offset: Offset(0, 2),
                   ),
@@ -34,21 +35,21 @@ class HomeScreen extends StatelessWidget {
                   Gap(20),
                   TabBar(
                     splashFactory: NoSplash.splashFactory,
-                    overlayColor: WidgetStateProperty.all(Colors.transparent),
-                    indicatorColor: const Color(0xFF1F2937),
+                    overlayColor: WidgetStateProperty.all(AppColors.transparent),
+                    indicatorColor: AppColors.gray800,
                     indicatorWeight: 4,
                     indicatorSize: TabBarIndicatorSize.label,
-                    labelColor: const Color(0xFF1F2937),
+                    labelColor: AppColors.gray800,
                     labelStyle: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
-                    unselectedLabelColor: const Color(0xFF9E9E9E),
+                    unselectedLabelColor: AppColors.gray500,
                     unselectedLabelStyle: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                     ),
-                    dividerColor: Colors.transparent,
+                    dividerColor: AppColors.transparent,
                     tabs: HomeTabType.values.map((tab) {
                       return Tab(text: tab.label, height: 56);
                     }).toList(),
@@ -56,12 +57,10 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             const Expanded(
               child: TabBarView(
                 children: [
                   Center(child: Text('주차별 학습 콘텐츠가 들어갈 자리입니다.')),
-
                   Center(child: Text('마이페이지 콘텐츠가 들어갈 자리입니다.')),
                 ],
               ),

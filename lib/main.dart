@@ -1,5 +1,6 @@
 import 'package:bodytalk/di/injection_container.dart' as di;
 import 'package:bodytalk/presentation/splash/splash_screen.dart';
+import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:bodytalk/presentation/util/app_size.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
     AppSize.init(context);
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.themeSeed),
+      ),
       home: const DetailScreen(),
     );
   }

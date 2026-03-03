@@ -1,4 +1,5 @@
-import 'package:bounce_tapper/bounce_tapper.dart';
+﻿import 'package:bounce_tapper/bounce_tapper.dart';
+import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -20,8 +21,8 @@ class SaveButton extends HookWidget {
         padding: EdgeInsets.only(bottom: AppSize.bottomInset == 0 ? 16 : 0),
         child: FilledButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFAF738),
-            foregroundColor: const Color(0xFF0F172A),
+            backgroundColor: AppColors.primaryAccent,
+            foregroundColor: AppColors.slate900,
             elevation: 2,
             padding: const EdgeInsets.symmetric(vertical: 16),
             shape: RoundedRectangleBorder(
@@ -39,3 +40,4 @@ class SaveButton extends HookWidget {
     );
   }
 }
+

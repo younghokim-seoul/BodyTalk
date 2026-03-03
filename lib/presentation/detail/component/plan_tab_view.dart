@@ -1,3 +1,4 @@
+﻿import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:bodytalk/presentation/widget/button/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -66,12 +67,12 @@ class _PlanSection extends StatelessWidget {
 
   static final _enabledBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
-    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+    borderSide: const BorderSide(color: AppColors.border),
   );
 
   static final _focusedBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
-    borderSide: const BorderSide(color: Color(0xFFFAF738), width: 2.0),
+    borderSide: const BorderSide(color: AppColors.primaryAccent, width: 2.0),
   );
 
   @override
@@ -85,7 +86,7 @@ class _PlanSection extends StatelessWidget {
               width: 8,
               height: 8,
               decoration: const BoxDecoration(
-                color: Color(0xFFFAF738),
+                color: AppColors.primaryAccent,
                 shape: BoxShape.circle,
               ),
             ),
@@ -95,28 +96,28 @@ class _PlanSection extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF0F172A),
+                color: AppColors.slate900,
               ),
             ),
           ],
         ),
-        Gap(8),
+        const Gap(8),
         TextFormField(
           controller: controller,
           maxLines: 5,
           minLines: 2,
           keyboardType: TextInputType.multiline,
           textInputAction: TextInputAction.newline,
-          style: const TextStyle(fontSize: 14.0, color: Color(0xFF0F172A)),
-          cursorColor: const Color(0xFFFAF738),
+          style: const TextStyle(fontSize: 14.0, color: AppColors.slate900),
+          cursorColor: AppColors.primaryAccent,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(
-              color: Color(0xFF94A3B8),
+              color: AppColors.slate400,
               fontSize: 14.0,
             ),
             filled: true,
-            fillColor: const Color(0xFFF8FAFC),
+            fillColor: AppColors.slate50,
             contentPadding: const EdgeInsets.all(16),
             enabledBorder: _enabledBorder,
             focusedBorder: _focusedBorder,

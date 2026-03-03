@@ -1,6 +1,7 @@
-import 'package:bodytalk/presentation/detail/component/plan_tab_view.dart';
-import 'package:bodytalk/presentation/detail/content_detail_tab_type.enum.dart';
+﻿import 'package:bodytalk/presentation/detail/component/plan_tab_view.dart';
 import 'package:bodytalk/presentation/detail/component/sticky_container.dart';
+import 'package:bodytalk/presentation/detail/content_detail_tab_type.enum.dart';
+import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:bodytalk/presentation/util/app_size.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
@@ -27,16 +28,14 @@ class _DetailScreenState extends State<DetailScreen> {
         return GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Scaffold(
-            backgroundColor: const Color(0xFFFDFDFD),
+            backgroundColor: AppColors.surface,
             body: SafeArea(
               child: DefaultTabController(
                 length: ContentsDetailTabType.values.length,
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
-                    if (notification.metrics.axisDirection ==
-                        AxisDirection.left ||
-                        notification.metrics.axisDirection ==
-                            AxisDirection.right) {
+                    if (notification.metrics.axisDirection == AxisDirection.left ||
+                        notification.metrics.axisDirection == AxisDirection.right) {
                       return true;
                     }
                     if ((tabController.animation?.isAnimating ?? true) ||
@@ -56,7 +55,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     headerSliverBuilder: (context, innerBoxIsScrolled) {
                       return [
                         SliverAppBar(
-                          backgroundColor: Colors.white,
+                          backgroundColor: AppColors.white,
                           elevation: 0.0,
                           automaticallyImplyLeading: false,
                           leading: Center(
@@ -70,7 +69,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 height: 40,
                                 child: Icon(
                                   Icons.arrow_back,
-                                  color: Color(0xFF0F172A),
+                                  color: AppColors.slate900,
                                 ),
                               ),
                             ),
@@ -78,7 +77,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           title: const Text(
                             'Week 01: Master the Basics',
                             style: TextStyle(
-                              color: Color(0xFF0F172A),
+                              color: AppColors.slate900,
                               fontSize: 18.0,
                               fontWeight: FontWeight.w700,
                               letterSpacing: -0.5,
@@ -87,7 +86,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           bottom: PreferredSize(
                             preferredSize: const Size.fromHeight(1.0),
                             child: Container(
-                              color: const Color(0xFFF1F5F9), // slate-100
+                              color: AppColors.slate100,
                               height: 1.0,
                               width: double.infinity,
                             ),
@@ -101,7 +100,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             child: Stack(
                               children: [
                                 Container(
-                                  color: Colors.blue,
+                                  color: AppColors.blue,
                                   width: double.infinity,
                                 ),
                               ],
@@ -111,7 +110,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         SliverPersistentHeader(
                           pinned: true,
                           delegate: StickyDelegateContainer(
-                            child: _TabBar(controller: tabController,),
+                            child: _TabBar(controller: tabController),
                             minHeight: DetailScreen.tabBarHeight,
                             maxHeight: DetailScreen.tabBarHeight,
                           ),
@@ -122,8 +121,8 @@ class _DetailScreenState extends State<DetailScreen> {
                       controller: tabController,
                       children: [
                         PlanTabView(),
-                        Container(color: Colors.white),
-                        Container(color: Colors.white),
+                        Container(color: AppColors.white),
+                        Container(color: AppColors.white),
                       ],
                     ),
                   ),

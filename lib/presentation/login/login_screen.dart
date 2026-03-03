@@ -1,4 +1,5 @@
-import 'package:bodytalk/presentation/widget/logo/body_talk_logo.dart';
+﻿import 'package:bodytalk/presentation/widget/logo/body_talk_logo.dart';
+import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -15,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFDFD),
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -61,11 +62,11 @@ class _LoginScreenState extends State<LoginScreen> {
         width: 240,
         height: 48,
         decoration: BoxDecoration(
-          color: const Color(0xFFF3F4F6),
+          color: AppColors.gray100,
           borderRadius: BorderRadius.circular(24),
           boxShadow: const [
             BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.06),
+              color: AppColors.black06,
               offset: Offset(0, 2),
               blurRadius: 4,
               spreadRadius: 0,
@@ -84,11 +85,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 width: 116,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: const [
                     BoxShadow(
-                      color: Colors.black12,
+                      color: AppColors.black12,
                       blurRadius: 2,
                       offset: Offset(0, 1),
                     ),
@@ -108,8 +109,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: isStudent
-                              ? const Color(0xFF1F2937)
-                              : Colors.grey,
+                              ? AppColors.gray800
+                              : AppColors.gray500,
                         ),
                       ),
                     ),
@@ -125,8 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: !isStudent
-                              ? const Color(0xFF1F2937)
-                              : Colors.grey,
+                              ? AppColors.gray800
+                              : AppColors.gray500,
                         ),
                       ),
                     ),
@@ -143,23 +144,23 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildTextField(String hint, {required bool obscureText}) {
     return TextField(
       obscureText: obscureText,
-      style: const TextStyle(fontSize: 16, color: Color(0xFF1F2937)),
+      style: const TextStyle(fontSize: 16, color: AppColors.gray800),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.black38),
+        hintStyle: const TextStyle(color: AppColors.black38),
         filled: true,
-        fillColor: Colors.white,
+        fillColor: AppColors.white,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 16,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+          borderSide: const BorderSide(color: AppColors.gray200),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: Color(0xFFFFEFA7), width: 2),
+          borderSide: const BorderSide(color: AppColors.primaryAccentSoft, width: 2),
         ),
       ),
     );
@@ -172,11 +173,11 @@ class _LoginScreenState extends State<LoginScreen> {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: const Color(0xFFFFEFA7),
+          color: AppColors.primaryAccentSoft,
           borderRadius: BorderRadius.circular(999),
           boxShadow: const [
             BoxShadow(
-              color: Color(0xFFEAD065),
+              color: AppColors.primaryAccentShadow,
               offset: Offset(0, 4),
               blurRadius: 0,
             ),
@@ -188,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w900,
-              color: Color(0xFF1F2937),
+              color: AppColors.gray800,
               letterSpacing: 1.2,
             ),
           ),
@@ -197,3 +198,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+

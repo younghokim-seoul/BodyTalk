@@ -1,5 +1,7 @@
+﻿import 'dart:math' as math;
+
+import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class BodyTalkLogo extends StatelessWidget {
   const BodyTalkLogo({super.key});
@@ -15,28 +17,36 @@ class BodyTalkLogo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _buildBubbleChar('B', const Color(0xFF5C9DFF), 72, rotateDeg: -6),
+              _buildBubbleChar('B', AppColors.logoBlue, 72, rotateDeg: -6),
               const SizedBox(width: 2),
-              _buildBubbleChar('o', const Color(0xFF8CE593), 48, rotateDeg: 3, paddingBottom: 12),
+              _buildBubbleChar(
+                'o',
+                AppColors.logoGreen,
+                48,
+                rotateDeg: 3,
+                paddingBottom: 12,
+              ),
               const SizedBox(width: 2),
-              _buildBubbleChar('D', const Color(0xFFFF8585), 72, rotateDeg: -3),
+              _buildBubbleChar('D', AppColors.logoRed, 72, rotateDeg: -3),
               const SizedBox(width: 2),
               Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  _buildBubbleChar('y', const Color(0xFFFF9ECA), 72, rotateDeg: 6),
-                  Positioned(
+                  _buildBubbleChar('y', AppColors.logoPink, 72, rotateDeg: 6),
+                  const Positioned(
                     top: -16,
                     right: -8,
-                    child: Icon(Icons.star, size: 32, color: Colors.yellow[300]!.withOpacity(0.8)),
+                    child: Icon(
+                      Icons.star,
+                      size: 32,
+                      color: AppColors.logoStarYellow,
+                    ),
                   ),
                 ],
               ),
             ],
           ),
-
           const SizedBox(height: 4),
-
           Padding(
             padding: const EdgeInsets.only(left: 24.0),
             child: Row(
@@ -46,23 +56,33 @@ class BodyTalkLogo extends StatelessWidget {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    _buildBubbleChar('T', const Color(0xFFFFD93D), 72, rotateDeg: 3),
+                    _buildBubbleChar('T', AppColors.logoYellow, 72, rotateDeg: 3),
                     Positioned(
                       bottom: 8,
                       left: -24,
                       child: Transform.rotate(
                         angle: 45 * math.pi / 180,
-                        child: Icon(Icons.star, size: 24, color: Colors.pink[300]!.withOpacity(0.6)),
+                        child: const Icon(
+                          Icons.star,
+                          size: 24,
+                          color: AppColors.logoStarPink,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(width: 2),
-                _buildBubbleChar('a', const Color(0xFFC689FF), 60, rotateDeg: -3, paddingTop: 8),
+                _buildBubbleChar(
+                  'a',
+                  AppColors.logoPurpleLight,
+                  60,
+                  rotateDeg: -3,
+                  paddingTop: 8,
+                ),
                 const SizedBox(width: 2),
-                _buildBubbleChar('l', const Color(0xFF9D76F0), 72, rotateDeg: 2),
+                _buildBubbleChar('l', AppColors.logoPurple, 72, rotateDeg: 2),
                 const SizedBox(width: 2),
-                _buildBubbleChar('k', const Color(0xFFFF9F43), 72, rotateDeg: -6),
+                _buildBubbleChar('k', AppColors.logoOrange, 72, rotateDeg: -6),
               ],
             ),
           ),
@@ -71,15 +91,22 @@ class BodyTalkLogo extends StatelessWidget {
     );
   }
 
-  Widget _buildBubbleChar(String char, Color color, double fontSize, {double rotateDeg = 0, double paddingTop = 0, double paddingBottom = 0}) {
+  Widget _buildBubbleChar(
+    String char,
+    Color color,
+    double fontSize, {
+    double rotateDeg = 0,
+    double paddingTop = 0,
+    double paddingBottom = 0,
+  }) {
     final baseTextStyle = TextStyle(
       fontSize: fontSize,
       fontWeight: FontWeight.w900,
       height: 1.0,
-      shadows: [
+      shadows: const [
         Shadow(
-          color: Colors.black.withOpacity(0.05),
-          offset: const Offset(3, 3),
+          color: AppColors.black05,
+          offset: Offset(3, 3),
           blurRadius: 0,
         ),
       ],
@@ -93,7 +120,7 @@ class BodyTalkLogo extends StatelessWidget {
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = 4.0
-              ..color = Colors.white,
+              ..color = AppColors.white,
           ),
         ),
         Text(char, style: baseTextStyle.copyWith(color: color)),
