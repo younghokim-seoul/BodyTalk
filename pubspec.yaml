@@ -21,6 +21,9 @@ dependencies:
   http: ^1.6.0
   gap: ^3.0.1
 
+  extended_nested_scroll_view: ^6.2.1
+  bounce_tapper: ^1.1.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
