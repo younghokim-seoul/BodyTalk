@@ -11,8 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  arc:
-    git: https://github.com/akthfdyd/arc.git
+  rxdart: ^0.28.0
 
   get_it: ^7.2.0
   cupertino_icons: ^1.0.8
@@ -26,11 +25,16 @@ dependencies:
   flutter_easyloading: ^3.0.5
   fluttertoast: ^8.2.2
 
+  go_router: ^17.1.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  build_runner: ^2.12.1
+
 
 flutter:
   uses-material-design: true
