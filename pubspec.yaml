@@ -23,6 +23,8 @@ dependencies:
 
   extended_nested_scroll_view: ^6.2.1
   bounce_tapper: ^1.1.4
+  flutter_easyloading: ^3.0.5
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
