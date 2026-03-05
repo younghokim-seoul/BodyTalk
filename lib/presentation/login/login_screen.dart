@@ -34,8 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const Gap(20),
                         BodyTalkLogo(),
-                        const Gap(56),
-                        _buildToggle(),
                         const Gap(40),
                         _buildTextField('ID', obscureText: false),
                         const Gap(16),
