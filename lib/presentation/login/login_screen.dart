@@ -1,7 +1,13 @@
-﻿import 'package:bodytalk/presentation/widget/logo/body_talk_logo.dart';
+﻿import 'package:bodytalk/di/injection_container.dart';
+import 'package:bodytalk/presentation/login/login_view_model.dart';
 import 'package:bodytalk/presentation/util/app_colors.dart';
+import 'package:bodytalk/presentation/util/toast_helper.dart';
+import 'package:bodytalk/presentation/widget/logo/body_talk_logo.dart';
+import 'package:bodytalk/router/router.dart';
+import 'package:bounce_tapper/bounce_tapper.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,7 +17,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isStudent = true;
+  var viewModel = it<LoginViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    viewModel.event.listen((event) {
+      event.when(
+        loginSuccess: () => context.go(AppRouter.mainPath),
+        toastMessage: (message) => ToastHelper.show(message: message),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +53,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         const Gap(20),
                         BodyTalkLogo(),
                         const Gap(40),
-                        _buildTextField('ID', obscureText: false),
+                        _buildTextField(
+                          'ID',
+                          obscureText: false,
+                          onChanged: viewModel.onChangedId,
+                        ),
                         const Gap(16),
-                        _buildTextField('Password', obscureText: true),
+                        _buildTextField(
+                          'Password',
+                          obscureText: true,
+                          onChanged: viewModel.onChangedPw,
+                        ),
                         const Spacer(),
                         const Gap(40),
                         _buildLoginButton(),
@@ -54,92 +80,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildToggle() {
-    return Center(
-      child: Container(
-        width: 240,
-        height: 48,
-        decoration: BoxDecoration(
-          color: AppColors.gray100,
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: const [
-            BoxShadow(
-              color: AppColors.black06,
-              offset: Offset(0, 2),
-              blurRadius: 4,
-              spreadRadius: 0,
-              blurStyle: BlurStyle.inner,
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              left: isStudent ? 4 : 120,
-              top: 4,
-              bottom: 4,
-              child: Container(
-                width: 116,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColors.black12,
-                      blurRadius: 2,
-                      offset: Offset(0, 1),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => isStudent = true),
-                    behavior: HitTestBehavior.opaque,
-                    child: Center(
-                      child: Text(
-                        'Student',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: isStudent
-                              ? AppColors.gray800
-                              : AppColors.gray500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => setState(() => isStudent = false),
-                    behavior: HitTestBehavior.opaque,
-                    child: Center(
-                      child: Text(
-                        'Coach',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: !isStudent
-                              ? AppColors.gray800
-                              : AppColors.gray500,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextField(String hint, {required bool obscureText}) {
+  Widget _buildTextField(
+    String hint, {
+    required bool obscureText,
+    required ValueChanged<String> onChanged,
+  }) {
     return TextField(
       obscureText: obscureText,
       style: const TextStyle(fontSize: 16, color: AppColors.gray800),
@@ -158,15 +103,21 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColors.primaryAccentSoft, width: 2),
+          borderSide: const BorderSide(
+            color: AppColors.primaryAccentSoft,
+            width: 2,
+          ),
         ),
       ),
+      onChanged: onChanged,
     );
   }
 
   Widget _buildLoginButton() {
-    return GestureDetector(
-      onTap: () {},
+    return BounceTapper(
+      onTap: () {
+         viewModel.login();
+      },
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -196,5 +147,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-

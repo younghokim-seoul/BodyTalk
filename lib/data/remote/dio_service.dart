@@ -20,8 +20,7 @@ class DioService extends NetworkService with ExceptionHandlerMixin {
     }
   }
 
-  BaseOptions get dioBaseOptions =>
-      BaseOptions(baseUrl: baseUrl, headers: headers);
+  BaseOptions get dioBaseOptions => BaseOptions(baseUrl: baseUrl, headers: headers);
 
   @override
   String get baseUrl => 'http://3.37.215.52:8080/';

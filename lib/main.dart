@@ -5,6 +5,7 @@ import 'package:bodytalk/presentation/util/app_size.dart';
 import 'package:bodytalk/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
       builder: EasyLoading.init(
         builder: (context, child) {
           AppSize.init(context);
-          return child ?? const SizedBox.shrink();
+          return FToastBuilder()(context, child);
         },
       ),
     );
