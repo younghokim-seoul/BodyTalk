@@ -22,10 +22,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
     viewModel.event.listen((event) {
       switch (event) {
-        case SplashEvent.GO_LOGIN:
+        case SplashEvent.goLogin:
           context.go(AppRouter.loginPath);
           break;
-        case SplashEvent.GO_MAIN:
+        case SplashEvent.goMain:
           context.go(AppRouter.mainName);
           break;
       }

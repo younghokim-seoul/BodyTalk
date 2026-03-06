@@ -2,14 +2,15 @@ import 'package:bodytalk/data/local/local_cache_store.dart';
 import 'package:bodytalk/view_model_interface.dart';
 import 'package:rxdart/rxdart.dart';
 
-enum SplashEvent { GO_MAIN, GO_LOGIN }
+enum SplashEvent { goMain, goLogin }
 
 class SplashViewModel extends ViewModelInterface {
-  SplashViewModel(this._localCacheStore);
-
   final LocalCacheStore _localCacheStore;
 
+  SplashViewModel(this._localCacheStore);
+
   final _event = PublishSubject<SplashEvent>();
+
   Stream<SplashEvent> get event => _event.stream;
 
   @override
@@ -18,9 +19,9 @@ class SplashViewModel extends ViewModelInterface {
     final currentToken = _localCacheStore.getString('access_token');
 
     if (currentToken != null && currentToken.isNotEmpty) {
-      sendEvent(SplashEvent.GO_MAIN);
+      sendEvent(SplashEvent.goMain);
     } else {
-      sendEvent(SplashEvent.GO_LOGIN);
+      sendEvent(SplashEvent.goLogin);
     }
   }
 
