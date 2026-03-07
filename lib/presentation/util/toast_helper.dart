@@ -8,11 +8,11 @@ class ToastHelper {
 
   static final FToast _fToast = FToast();
 
-  static void show(
-    {
+  static void show({
     required String message,
     ToastGravity gravity = ToastGravity.BOTTOM,
     Duration duration = const Duration(seconds: 2),
+    double bottomOffset = 10.0,
   }) {
     final overlayContext = rootNavigatorKey.currentState?.overlay?.context;
     if (overlayContext == null) return;
@@ -25,6 +25,7 @@ class ToastHelper {
       child: _ToastBody(
         message: message,
         backgroundColor: AppColors.gray800,
+        bottomOffset: gravity == ToastGravity.BOTTOM ? bottomOffset : 0,
       ),
     );
   }
@@ -34,15 +35,17 @@ class _ToastBody extends StatelessWidget {
   const _ToastBody({
     required this.message,
     required this.backgroundColor,
+    this.bottomOffset = 0,
   });
 
   final String message;
   final Color backgroundColor;
+  final double bottomOffset;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
+      margin: EdgeInsets.only(left: 24, right: 24, bottom: bottomOffset),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: backgroundColor,
