@@ -11,10 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  arc:
-    git: https://github.com/akthfdyd/arc.git
-
-#  rxdart: ^0.28.0
+  rxdart: ^0.28.0
 
   get_it: ^7.2.0
   cupertino_icons: ^1.0.8
@@ -34,6 +31,8 @@ dependencies:
   shared_preferences: ^2.5.3
   freezed_annotation: ^3.1.0
   json_annotation: ^4.11.0
+  cached_network_image: ^3.4.1
+  image_picker: ^1.2.1
 
 
 dev_dependencies:
