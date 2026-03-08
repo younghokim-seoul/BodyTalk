@@ -1,6 +1,6 @@
-import 'package:arc/arc_subject.dart';
 import 'package:bodytalk/data/local/local_cache_store.dart';
 import 'package:bodytalk/data/remote/repository/auth_repository.dart';
+import 'package:bodytalk/flow/state_flow.dart';
 import 'package:bodytalk/view_model_interface.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -15,18 +15,17 @@ class LoginViewModel extends ViewModelInterface {
   final _event = PublishSubject<LoginEvent>();
   Stream<LoginEvent> get event => _event.stream;
 
-
-  final idText = BehaviorSubject<String>.seeded('');
-  final pwText = BehaviorSubject<String>.seeded('');
+  final idText = StateFlow<String>(seed: 'student_1');
+  final pwText = StateFlow<String>(seed: ' student1!');
 
   Future<void> login() async {
 
-    if(idText.value.isEmpty || pwText.value.isEmpty) {
+    if(idText.val == null || pwText.val == null) {
       sendEvent(const LoginEvent.toastMessage('아이디와 비밀번호를 입력해주세요.'));
       return;
     }
 
-    final param = {'user_id': idText.value, 'user_pw': pwText.value};
+    final param = {'user_id': idText.val, 'user_pw': pwText.val};
     final result = await _authRepository.loginUser(param: param);
     result.fold(
       (exception) {
@@ -41,9 +40,9 @@ class LoginViewModel extends ViewModelInterface {
   }
 
 
-  void onChangedId(String str) => idText.add(str);
+  void onChangedId(String str) => idText.val = str;
 
-  void onChangedPw(String str) => pwText.add(str);
+  void onChangedPw(String str) => pwText.val = str;
 
   void sendEvent(LoginEvent event) {
     _event.add(event);

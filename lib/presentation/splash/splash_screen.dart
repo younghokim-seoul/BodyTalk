@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
           context.go(AppRouter.loginPath);
           break;
         case SplashEvent.goMain:
-          context.go(AppRouter.mainName);
+          context.go(AppRouter.mainPath);
           break;
       }
     });
