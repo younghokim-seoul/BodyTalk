@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
-@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'user_nm') String get userNm;@JsonKey(name: 'user_tp') String get userTp;@JsonKey(name: 'user_mng') String get userMng;@JsonKey(name: 'cre_dt') DateTime get creDt;@JsonKey(name: 'upd_dt') DateTime get updDt;
+@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'user_nm') String get userNm;@JsonKey(name: 'user_tp') String get userTp;@JsonKey(name: 'cre_dt') DateTime get creDt;@JsonKey(name: 'upd_dt') DateTime get updDt;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserModelCopyWith<UserModel> get copyWith => _$UserModelCopyWithImpl<UserModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userNm, userNm) || other.userNm == userNm)&&(identical(other.userTp, userTp) || other.userTp == userTp)&&(identical(other.userMng, userMng) || other.userMng == userMng)&&(identical(other.creDt, creDt) || other.creDt == creDt)&&(identical(other.updDt, updDt) || other.updDt == updDt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userNm, userNm) || other.userNm == userNm)&&(identical(other.userTp, userTp) || other.userTp == userTp)&&(identical(other.creDt, creDt) || other.creDt == creDt)&&(identical(other.updDt, updDt) || other.updDt == updDt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,userNm,userTp,userMng,creDt,updDt);
+int get hashCode => Object.hash(runtimeType,userId,userNm,userTp,creDt,updDt);
 
 @override
 String toString() {
-  return 'UserModel(userId: $userId, userNm: $userNm, userTp: $userTp, userMng: $userMng, creDt: $creDt, updDt: $updDt)';
+  return 'UserModel(userId: $userId, userNm: $userNm, userTp: $userTp, creDt: $creDt, updDt: $updDt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'user_nm') String userNm,@JsonKey(name: 'user_tp') String userTp,@JsonKey(name: 'user_mng') String userMng,@JsonKey(name: 'cre_dt') DateTime creDt,@JsonKey(name: 'upd_dt') DateTime updDt
+@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'user_nm') String userNm,@JsonKey(name: 'user_tp') String userTp,@JsonKey(name: 'cre_dt') DateTime creDt,@JsonKey(name: 'upd_dt') DateTime updDt
 });
 
 
@@ -65,12 +65,11 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? userNm = null,Object? userTp = null,Object? userMng = null,Object? creDt = null,Object? updDt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? userNm = null,Object? userTp = null,Object? creDt = null,Object? updDt = null,}) {
   return _then(_self.copyWith(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,userNm: null == userNm ? _self.userNm : userNm // ignore: cast_nullable_to_non_nullable
 as String,userTp: null == userTp ? _self.userTp : userTp // ignore: cast_nullable_to_non_nullable
-as String,userMng: null == userMng ? _self.userMng : userMng // ignore: cast_nullable_to_non_nullable
 as String,creDt: null == creDt ? _self.creDt : creDt // ignore: cast_nullable_to_non_nullable
 as DateTime,updDt: null == updDt ? _self.updDt : updDt // ignore: cast_nullable_to_non_nullable
 as DateTime,
@@ -158,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'user_nm')  String userNm, @JsonKey(name: 'user_tp')  String userTp, @JsonKey(name: 'user_mng')  String userMng, @JsonKey(name: 'cre_dt')  DateTime creDt, @JsonKey(name: 'upd_dt')  DateTime updDt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'user_nm')  String userNm, @JsonKey(name: 'user_tp')  String userTp, @JsonKey(name: 'cre_dt')  DateTime creDt, @JsonKey(name: 'upd_dt')  DateTime updDt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.userId,_that.userNm,_that.userTp,_that.userMng,_that.creDt,_that.updDt);case _:
+return $default(_that.userId,_that.userNm,_that.userTp,_that.creDt,_that.updDt);case _:
   return orElse();
 
 }
@@ -179,10 +178,10 @@ return $default(_that.userId,_that.userNm,_that.userTp,_that.userMng,_that.creDt
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'user_nm')  String userNm, @JsonKey(name: 'user_tp')  String userTp, @JsonKey(name: 'user_mng')  String userMng, @JsonKey(name: 'cre_dt')  DateTime creDt, @JsonKey(name: 'upd_dt')  DateTime updDt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'user_nm')  String userNm, @JsonKey(name: 'user_tp')  String userTp, @JsonKey(name: 'cre_dt')  DateTime creDt, @JsonKey(name: 'upd_dt')  DateTime updDt)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
-return $default(_that.userId,_that.userNm,_that.userTp,_that.userMng,_that.creDt,_that.updDt);case _:
+return $default(_that.userId,_that.userNm,_that.userTp,_that.creDt,_that.updDt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +198,10 @@ return $default(_that.userId,_that.userNm,_that.userTp,_that.userMng,_that.creDt
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'user_nm')  String userNm, @JsonKey(name: 'user_tp')  String userTp, @JsonKey(name: 'user_mng')  String userMng, @JsonKey(name: 'cre_dt')  DateTime creDt, @JsonKey(name: 'upd_dt')  DateTime updDt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'user_nm')  String userNm, @JsonKey(name: 'user_tp')  String userTp, @JsonKey(name: 'cre_dt')  DateTime creDt, @JsonKey(name: 'upd_dt')  DateTime updDt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
-return $default(_that.userId,_that.userNm,_that.userTp,_that.userMng,_that.creDt,_that.updDt);case _:
+return $default(_that.userId,_that.userNm,_that.userTp,_that.creDt,_that.updDt);case _:
   return null;
 
 }
@@ -214,13 +213,12 @@ return $default(_that.userId,_that.userNm,_that.userTp,_that.userMng,_that.creDt
 @JsonSerializable()
 
 class _UserModel implements UserModel {
-  const _UserModel({@JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'user_nm') required this.userNm, @JsonKey(name: 'user_tp') required this.userTp, @JsonKey(name: 'user_mng') required this.userMng, @JsonKey(name: 'cre_dt') required this.creDt, @JsonKey(name: 'upd_dt') required this.updDt});
+  const _UserModel({@JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'user_nm') required this.userNm, @JsonKey(name: 'user_tp') required this.userTp, @JsonKey(name: 'cre_dt') required this.creDt, @JsonKey(name: 'upd_dt') required this.updDt});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override@JsonKey(name: 'user_id') final  String userId;
 @override@JsonKey(name: 'user_nm') final  String userNm;
 @override@JsonKey(name: 'user_tp') final  String userTp;
-@override@JsonKey(name: 'user_mng') final  String userMng;
 @override@JsonKey(name: 'cre_dt') final  DateTime creDt;
 @override@JsonKey(name: 'upd_dt') final  DateTime updDt;
 
@@ -237,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userNm, userNm) || other.userNm == userNm)&&(identical(other.userTp, userTp) || other.userTp == userTp)&&(identical(other.userMng, userMng) || other.userMng == userMng)&&(identical(other.creDt, creDt) || other.creDt == creDt)&&(identical(other.updDt, updDt) || other.updDt == updDt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userNm, userNm) || other.userNm == userNm)&&(identical(other.userTp, userTp) || other.userTp == userTp)&&(identical(other.creDt, creDt) || other.creDt == creDt)&&(identical(other.updDt, updDt) || other.updDt == updDt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,userNm,userTp,userMng,creDt,updDt);
+int get hashCode => Object.hash(runtimeType,userId,userNm,userTp,creDt,updDt);
 
 @override
 String toString() {
-  return 'UserModel(userId: $userId, userNm: $userNm, userTp: $userTp, userMng: $userMng, creDt: $creDt, updDt: $updDt)';
+  return 'UserModel(userId: $userId, userNm: $userNm, userTp: $userTp, creDt: $creDt, updDt: $updDt)';
 }
 
 
@@ -257,7 +255,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'user_nm') String userNm,@JsonKey(name: 'user_tp') String userTp,@JsonKey(name: 'user_mng') String userMng,@JsonKey(name: 'cre_dt') DateTime creDt,@JsonKey(name: 'upd_dt') DateTime updDt
+@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'user_nm') String userNm,@JsonKey(name: 'user_tp') String userTp,@JsonKey(name: 'cre_dt') DateTime creDt,@JsonKey(name: 'upd_dt') DateTime updDt
 });
 
 
@@ -274,12 +272,11 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? userNm = null,Object? userTp = null,Object? userMng = null,Object? creDt = null,Object? updDt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? userNm = null,Object? userTp = null,Object? creDt = null,Object? updDt = null,}) {
   return _then(_UserModel(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,userNm: null == userNm ? _self.userNm : userNm // ignore: cast_nullable_to_non_nullable
 as String,userTp: null == userTp ? _self.userTp : userTp // ignore: cast_nullable_to_non_nullable
-as String,userMng: null == userMng ? _self.userMng : userMng // ignore: cast_nullable_to_non_nullable
 as String,creDt: null == creDt ? _self.creDt : creDt // ignore: cast_nullable_to_non_nullable
 as DateTime,updDt: null == updDt ? _self.updDt : updDt // ignore: cast_nullable_to_non_nullable
 as DateTime,

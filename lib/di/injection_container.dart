@@ -2,6 +2,9 @@ import 'package:bodytalk/data/local/local_cache_store.dart';
 import 'package:bodytalk/data/remote/dio_service.dart';
 import 'package:bodytalk/data/remote/network_service.dart';
 import 'package:bodytalk/data/remote/repository/auth_repository.dart';
+import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
+import 'package:bodytalk/presentation/detail/detail_view_model.dart';
+import 'package:bodytalk/presentation/home/home_view_model.dart';
 import 'package:bodytalk/presentation/login/login_view_model.dart';
 import 'package:bodytalk/presentation/splash/splash_view_model.dart';
 import 'package:dio/dio.dart';
@@ -21,11 +24,14 @@ Future<void> init() async {
   it.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(it<NetworkService>(), it<LocalCacheStore>()),
   );
-
-  it.registerFactory(
-    () => SplashViewModel(it<LocalCacheStore>()),
+  it.registerLazySingleton<CurriculumRepository>(
+    () => CurriculumRepositoryImpl(it<NetworkService>()),
   );
+
+  it.registerFactory(() => SplashViewModel(it<LocalCacheStore>()));
   it.registerFactory(
     () => LoginViewModel(it<LocalCacheStore>(), it<AuthRepository>()),
   );
+  it.registerFactory(() => HomeViewModel(it<CurriculumRepository>()));
+  it.registerFactory(() => DetailViewModel(it<LocalCacheStore>(),it<CurriculumRepository>()));
 }
