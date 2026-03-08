@@ -1,3 +1,4 @@
+import 'package:bodytalk/presentation/detail/detail_screen.dart';
 import 'package:bodytalk/presentation/home/home_screen.dart';
 import 'package:bodytalk/presentation/login/login_screen.dart';
 import 'package:bodytalk/presentation/splash/splash_screen.dart';
@@ -15,6 +16,9 @@ abstract final class AppRouter {
 
   static const String mainPath = '/main';
   static const String mainName = 'main';
+
+  static const String detailPath = '/detail/:learningId/:curriculumId';
+  static const String detailName = 'detail';
 
   static final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
@@ -53,6 +57,21 @@ abstract final class AppRouter {
           key: state.pageKey,
           child: const HomeScreen(),
         ),
+      ),
+      GoRoute(
+        path: detailPath,
+        name: detailName,
+        pageBuilder: (context, state) {
+          final learningId = int.parse(state.pathParameters['learningId']!);
+          final curriculumId = int.parse(state.pathParameters['curriculumId']!);
+          return _buildFadeTransitionPage(
+            key: state.pageKey,
+            child: DetailScreen(
+              learningId: learningId,
+              curriculumId: curriculumId,
+            ),
+          );
+        },
       ),
     ],
   );
