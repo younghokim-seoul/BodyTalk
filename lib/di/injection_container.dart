@@ -3,6 +3,9 @@ import 'package:bodytalk/data/remote/dio_service.dart';
 import 'package:bodytalk/data/remote/network_service.dart';
 import 'package:bodytalk/data/remote/repository/auth_repository.dart';
 import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
+import 'package:bodytalk/presentation/detail/component/plan_tab_view_model.dart';
+import 'package:bodytalk/presentation/detail/component/practice_tab_view_model.dart';
+import 'package:bodytalk/presentation/detail/component/submit_tab_view_model.dart';
 import 'package:bodytalk/presentation/detail/detail_view_model.dart';
 import 'package:bodytalk/presentation/home/home_view_model.dart';
 import 'package:bodytalk/presentation/login/login_view_model.dart';
@@ -33,5 +36,17 @@ Future<void> init() async {
     () => LoginViewModel(it<LocalCacheStore>(), it<AuthRepository>()),
   );
   it.registerFactory(() => HomeViewModel(it<CurriculumRepository>()));
-  it.registerFactory(() => DetailViewModel(it<LocalCacheStore>(),it<CurriculumRepository>()));
+  it.registerFactory(
+    () => DetailViewModel(it<LocalCacheStore>(), it<CurriculumRepository>()),
+  );
+  it.registerFactory(
+    () => PlanTabViewModel(it<CurriculumRepository>(), it<LocalCacheStore>()),
+  );
+  it.registerFactory(
+    () =>
+        PracticeTabViewModel(it<CurriculumRepository>(), it<LocalCacheStore>()),
+  );
+  it.registerFactory(
+    () => SubmitTabViewModel(it<CurriculumRepository>(), it<LocalCacheStore>()),
+  );
 }
