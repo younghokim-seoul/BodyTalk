@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart';
+import 'package:bodytalk/di/injection_container.dart';
 import 'package:bodytalk/presentation/detail/component/input_section.dart';
+import 'package:bodytalk/presentation/detail/component/submit_tab_view_model.dart';
 import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:bodytalk/presentation/util/video_picker_helper.dart';
 import 'package:bounce_tapper/bounce_tapper.dart';
@@ -11,8 +13,16 @@ import 'package:gap/gap.dart' show Gap;
 
 class SubmitTabView extends HookWidget {
   final LearningDetailModel detail;
+  final int learningId;
+  final int curriculumId;
+  final SubmitTabViewModel _viewModel = it<SubmitTabViewModel>();
 
-  const SubmitTabView({super.key, required this.detail});
+  SubmitTabView({
+    super.key,
+    required this.detail,
+    required this.learningId,
+    required this.curriculumId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,21 +65,23 @@ class SubmitTabView extends HookWidget {
           ),
           suffixIcon: const Icon(Icons.edit_note, color: AppColors.slate300),
         ),
-
         const Gap(24),
-
-        // Submit Button
         BounceTapper(
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               FocusScope.of(context).unfocus();
-              // TODO: Submit assignment with pickedVideo.value
+              await _viewModel.submitAssignment(
+                learningId: learningId,
+                curriculumId: curriculumId,
+                question: questionController.text,
+                video: pickedVideo.value,
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryAccent,
               foregroundColor: AppColors.slate900,
               elevation: 8,
-              shadowColor: Colors.black.withOpacity(0.1),
+              shadowColor: Colors.black.withValues(alpha: 0.1),
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -88,12 +100,11 @@ class SubmitTabView extends HookWidget {
             ),
           ),
         ),
-
         const Gap(16),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            "코치가 48시간 이내에 과제를 확인하고 피드백을 드릴 예정입니다. 피드백이 완료되면 알림을 보내드릴게요.",
+            '코치가 48시간 이내에 과제를 확인하고 피드백을 드릴 예정입니다. 피드백이 완료되면 알림을 보내드릴게요.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 11,
@@ -106,7 +117,11 @@ class SubmitTabView extends HookWidget {
     );
   }
 
-  Widget _buildUploadBox(BuildContext context, String? serverVideoUrl, ValueNotifier<File?> pickedVideo) {
+  Widget _buildUploadBox(
+    BuildContext context,
+    String? serverVideoUrl,
+    ValueNotifier<File?> pickedVideo,
+  ) {
     final hasVideo = serverVideoUrl != null || pickedVideo.value != null;
 
     Future<void> handlePickVideo() async {
@@ -133,7 +148,7 @@ class SubmitTabView extends HookWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColors.primaryAccent.withOpacity(0.2),
+                color: AppColors.primaryAccent.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -145,8 +160,8 @@ class SubmitTabView extends HookWidget {
             Text(
               hasVideo
                   ? (pickedVideo.value != null
-                      ? '새로운 영상이 선택되었습니다.'
-                      : '기존 영상이 업로드되어 있습니다.')
+                        ? '새로운 영상이 선택되었습니다.'
+                        : '기존 영상이 업로드되어 있습니다.')
                   : '연습 영상을 업로드해 주세요.',
               textAlign: TextAlign.center,
               style: const TextStyle(
@@ -161,18 +176,22 @@ class SubmitTabView extends HookWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryAccent,
                 foregroundColor: AppColors.slate900,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 10,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
                 elevation: 2,
-                shadowColor: Colors.black.withOpacity(0.1),
+                shadowColor: Colors.black.withValues(alpha: 0.1),
               ),
               child: Text(
                 hasVideo ? '영상 변경' : '영상 업로드',
-                style:
-                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

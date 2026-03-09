@@ -1,8 +1,8 @@
-﻿import 'package:bodytalk/di/injection_container.dart';
+import 'package:bodytalk/di/injection_container.dart';
 import 'package:bodytalk/presentation/detail/component/plan_tab_view.dart';
 import 'package:bodytalk/presentation/detail/component/practice_tab_view.dart';
-import 'package:bodytalk/presentation/detail/component/submit_tab_view.dart';
 import 'package:bodytalk/presentation/detail/component/sticky_container.dart';
+import 'package:bodytalk/presentation/detail/component/submit_tab_view.dart';
 import 'package:bodytalk/presentation/detail/content_detail_tab_type.enum.dart';
 import 'package:bodytalk/presentation/detail/detail_view_model.dart';
 import 'package:bodytalk/presentation/util/app_colors.dart';
@@ -41,6 +41,12 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   @override
+  void dispose() {
+    _viewModel.disposeAll();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return HookBuilder(
       builder: (context) {
@@ -54,7 +60,9 @@ class _DetailScreenState extends State<DetailScreen> {
               child: _viewModel.state.ui(
                 builder: (context, snapshot) {
                   final state = snapshot.data;
-                  if (state == null || state.isLoading || state.detail == null) {
+                  if (state == null ||
+                      state.isLoading ||
+                      state.detail == null) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
@@ -130,13 +138,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                 minHeight: AppSize.screenWidth * 9 / 16,
                                 maxHeight: AppSize.screenWidth * 9 / 16,
                                 child: CachedNetworkImage(
-                                        imageUrl: detail.curriculum.image,
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) =>
-                                            Container(color: AppColors.gray200),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                      ),
+                                  imageUrl: detail.curriculum.image,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) =>
+                                      Container(color: AppColors.gray200),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
+                                ),
                               ),
                             ),
                             SliverToBoxAdapter(
@@ -184,9 +192,21 @@ class _DetailScreenState extends State<DetailScreen> {
                         body: TabBarView(
                           controller: tabController,
                           children: [
-                            PlanTabView(detail: detail),
-                            PracticeTabView(detail: detail),
-                            SubmitTabView(detail: detail),
+                            PlanTabView(
+                              detail: detail,
+                              learningId: widget.learningId,
+                              curriculumId: widget.curriculumId,
+                            ),
+                            PracticeTabView(
+                              detail: detail,
+                              learningId: widget.learningId,
+                              curriculumId: widget.curriculumId,
+                            ),
+                            SubmitTabView(
+                              detail: detail,
+                              learningId: widget.learningId,
+                              curriculumId: widget.curriculumId,
+                            ),
                           ],
                         ),
                       ),

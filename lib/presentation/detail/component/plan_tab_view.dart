@@ -1,5 +1,7 @@
-﻿import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart';
+import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart';
+import 'package:bodytalk/di/injection_container.dart';
 import 'package:bodytalk/presentation/detail/component/input_section.dart';
+import 'package:bodytalk/presentation/detail/component/plan_tab_view_model.dart';
 import 'package:bodytalk/presentation/widget/button/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,10 +9,15 @@ import 'package:gap/gap.dart' show Gap;
 
 class PlanTabView extends HookWidget {
   final LearningDetailModel detail;
+  final int learningId;
+  final int curriculumId;
+  final PlanTabViewModel _viewModel = it<PlanTabViewModel>();
 
-  const PlanTabView({
+  PlanTabView({
     super.key,
     required this.detail,
+    required this.learningId,
+    required this.curriculumId,
   });
 
   @override
@@ -20,14 +27,18 @@ class PlanTabView extends HookWidget {
     final planPlaceholders = detail.curriculum.placeholders.plan;
     final existingPlan = detail.plan;
 
-    final recognitionController =
-        useTextEditingController(text: existingPlan?.recognition);
-    final motivationController =
-        useTextEditingController(text: existingPlan?.motive);
-    final actionController =
-        useTextEditingController(text: existingPlan?.active);
-    final contextPlanController =
-        useTextEditingController(text: existingPlan?.context);
+    final recognitionController = useTextEditingController(
+      text: existingPlan?.recognition,
+    );
+    final motivationController = useTextEditingController(
+      text: existingPlan?.motive,
+    );
+    final actionController = useTextEditingController(
+      text: existingPlan?.active,
+    );
+    final contextPlanController = useTextEditingController(
+      text: existingPlan?.context,
+    );
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 48),
@@ -57,9 +68,16 @@ class PlanTabView extends HookWidget {
         ),
         const Gap(32),
         SaveButton(
-          onSaveBtnTapped: () {
+          onSaveBtnTapped: () async {
             FocusScope.of(context).unfocus();
-            // TODO: Call viewModel to save the plan
+            await _viewModel.savePlan(
+              learningId: learningId,
+              curriculumId: curriculumId,
+              recognition: recognitionController.text.trim(),
+              motive: motivationController.text.trim(),
+              active: actionController.text.trim(),
+              context: contextPlanController.text.trim(),
+            );
           },
         ),
       ],

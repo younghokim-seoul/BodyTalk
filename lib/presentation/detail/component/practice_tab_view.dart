@@ -1,5 +1,7 @@
 import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart';
+import 'package:bodytalk/di/injection_container.dart';
 import 'package:bodytalk/presentation/detail/component/input_section.dart';
+import 'package:bodytalk/presentation/detail/component/practice_tab_view_model.dart';
 import 'package:bodytalk/presentation/widget/button/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,10 +9,15 @@ import 'package:gap/gap.dart' show Gap;
 
 class PracticeTabView extends HookWidget {
   final LearningDetailModel detail;
+  final int learningId;
+  final int curriculumId;
+  final PracticeTabViewModel _viewModel = it<PracticeTabViewModel>();
 
-  const PracticeTabView({
+  PracticeTabView({
     super.key,
     required this.detail,
+    required this.learningId,
+    required this.curriculumId,
   });
 
   @override
@@ -24,7 +31,9 @@ class PracticeTabView extends HookWidget {
     final motivationController = useTextEditingController();
     final actionController = useTextEditingController();
     final contextPlanController = useTextEditingController();
-    final journalController = useTextEditingController(text: existingPractice?.content);
+    final journalController = useTextEditingController(
+      text: existingPractice?.content,
+    );
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 48),
@@ -61,9 +70,17 @@ class PracticeTabView extends HookWidget {
         ),
         const Gap(32),
         SaveButton(
-          onSaveBtnTapped: () {
+          onSaveBtnTapped: () async {
             FocusScope.of(context).unfocus();
-            // TODO: Call viewModel to save the practice journal
+            await _viewModel.savePractice(
+              learningId: learningId,
+              curriculumId: curriculumId,
+              content: journalController.text.trim(),
+              recognition: recognitionController.text.trim(),
+              motive: motivationController.text.trim(),
+              active: actionController.text.trim(),
+              context: contextPlanController.text.trim(),
+            );
           },
         ),
       ],
