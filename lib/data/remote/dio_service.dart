@@ -43,10 +43,13 @@ class DioService extends NetworkService with ExceptionHandlerMixin {
   @override
   Future<Either<AppException, response.Response>> post(
     String endpoint, {
-    Map<String, dynamic>? data,
+    Object? data,
   }) {
+    final options = data is FormData
+        ? Options(contentType: 'multipart/form-data')
+        : null;
     final res = handleException(
-      () => dio.post(endpoint, data: data),
+      () => dio.post(endpoint, data: data, options: options),
       endpoint: endpoint,
     );
     return res;
