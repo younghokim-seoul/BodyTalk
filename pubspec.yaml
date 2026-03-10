@@ -33,7 +33,8 @@ dependencies:
   json_annotation: ^4.11.0
   cached_network_image: ^3.4.1
   image_picker: ^1.2.1
-
+  video_player: ^2.10.1
+  icons_launcher: ^3.0.3
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,12 @@
 import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart';
 import 'package:bodytalk/di/injection_container.dart';
 import 'package:bodytalk/presentation/detail/component/input_section.dart';
-import 'package:bodytalk/presentation/detail/component/plan_tab_view_model.dart';
+import 'package:bodytalk/presentation/detail/plan/plan_tab_view_model.dart';
+import 'package:bodytalk/presentation/util/toast_helper.dart';
 import 'package:bodytalk/presentation/widget/button/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart' show Gap;
 
 class PlanTabView extends HookWidget {
@@ -23,6 +25,18 @@ class PlanTabView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+    useEffect(() {
+      final subscription = _viewModel.event.listen((event) {
+        event.when(
+          toastMessage: (message) => ToastHelper.show(message: message,gravity: ToastGravity.TOP),
+        );
+      });
+
+      return () {
+        subscription.cancel();
+        _viewModel.disposeAll();
+      };
+    }, [_viewModel]);
 
     final planPlaceholders = detail.curriculum.placeholders.plan;
     final existingPlan = detail.plan;

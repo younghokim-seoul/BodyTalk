@@ -1,7 +1,8 @@
 import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart';
 import 'package:bodytalk/di/injection_container.dart';
 import 'package:bodytalk/presentation/detail/component/input_section.dart';
-import 'package:bodytalk/presentation/detail/component/practice_tab_view_model.dart';
+import 'package:bodytalk/presentation/detail/practice/practice_tab_view_model.dart';
+import 'package:bodytalk/presentation/util/toast_helper.dart';
 import 'package:bodytalk/presentation/widget/button/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,6 +24,18 @@ class PracticeTabView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+    useEffect(() {
+      final subscription = _viewModel.event.listen((event) {
+        event.when(
+          toastMessage: (message) => ToastHelper.show(message: message),
+        );
+      });
+
+      return () {
+        subscription.cancel();
+        _viewModel.disposeAll();
+      };
+    }, [_viewModel]);
 
     final practicePlaceholders = detail.curriculum.placeholders.practice;
     final existingPractice = detail.practice;

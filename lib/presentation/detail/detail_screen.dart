@@ -1,10 +1,10 @@
 import 'package:bodytalk/di/injection_container.dart';
-import 'package:bodytalk/presentation/detail/component/plan_tab_view.dart';
-import 'package:bodytalk/presentation/detail/component/practice_tab_view.dart';
 import 'package:bodytalk/presentation/detail/component/sticky_container.dart';
-import 'package:bodytalk/presentation/detail/component/submit_tab_view.dart';
 import 'package:bodytalk/presentation/detail/content_detail_tab_type.enum.dart';
 import 'package:bodytalk/presentation/detail/detail_view_model.dart';
+import 'package:bodytalk/presentation/detail/plan/plan_tab_view.dart';
+import 'package:bodytalk/presentation/detail/practice/practice_tab_view.dart';
+import 'package:bodytalk/presentation/detail/submit/submit_tab_view.dart';
 import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:bodytalk/presentation/util/app_size.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -115,7 +115,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 ),
                               ),
                               title: Text(
-                                detail.curriculum.description,
+                                detail.curriculum.name,
                                 style: const TextStyle(
                                   color: AppColors.slate900,
                                   fontSize: 18.0,

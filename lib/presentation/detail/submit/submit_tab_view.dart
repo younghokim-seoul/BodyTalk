@@ -1,13 +1,17 @@
 import 'dart:io';
 
+import 'package:bodytalk/data/remote/network_service.dart';
 import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart';
 import 'package:bodytalk/di/injection_container.dart';
 import 'package:bodytalk/presentation/detail/component/input_section.dart';
-import 'package:bodytalk/presentation/detail/component/submit_tab_view_model.dart';
+import 'package:bodytalk/presentation/detail/submit/submit_video_preview.dart';
+import 'package:bodytalk/presentation/detail/submit/submit_tab_view_model.dart';
 import 'package:bodytalk/presentation/util/app_colors.dart';
+import 'package:bodytalk/presentation/util/toast_helper.dart';
 import 'package:bodytalk/presentation/util/video_picker_helper.dart';
 import 'package:bounce_tapper/bounce_tapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart' show Gap;
 
@@ -27,8 +31,24 @@ class SubmitTabView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+    useEffect(() {
+      final subscription = _viewModel.event.listen((event) {
+        event.when(
+          toastMessage: (message) {
+            EasyLoading.dismiss();
+            ToastHelper.show(message: message);
+          },
+        );
+      });
+
+      return () {
+        subscription.cancel();
+        _viewModel.disposeAll();
+      };
+    }, [_viewModel]);
 
     final existingSubmit = detail.submit;
+    final serverVideoUrl = _resolveServerVideoUrl(existingSubmit?.video);
     final questionController = useTextEditingController(
       text: existingSubmit?.question,
     );
@@ -37,6 +57,10 @@ class SubmitTabView extends HookWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        if (serverVideoUrl != null) ...[
+          SubmitVideoPreview(videoUrl: serverVideoUrl),
+          const Gap(24),
+        ],
         const Text(
           '연습 영상 업로드',
           style: TextStyle(
@@ -70,6 +94,7 @@ class SubmitTabView extends HookWidget {
           child: ElevatedButton(
             onPressed: () async {
               FocusScope.of(context).unfocus();
+              await EasyLoading.show();
               await _viewModel.submitAssignment(
                 learningId: learningId,
                 curriculumId: curriculumId,
@@ -101,18 +126,6 @@ class SubmitTabView extends HookWidget {
           ),
         ),
         const Gap(16),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            '코치가 48시간 이내에 과제를 확인하고 피드백을 드릴 예정입니다. 피드백이 완료되면 알림을 보내드릴게요.',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 11,
-              color: AppColors.slate400,
-              height: 1.5,
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -160,7 +173,7 @@ class SubmitTabView extends HookWidget {
             Text(
               hasVideo
                   ? (pickedVideo.value != null
-                        ? '새로운 영상이 선택되었습니다.'
+                        ? pickedVideo.value!.path
                         : '기존 영상이 업로드되어 있습니다.')
                   : '연습 영상을 업로드해 주세요.',
               textAlign: TextAlign.center,
@@ -198,5 +211,20 @@ class SubmitTabView extends HookWidget {
         ),
       ),
     );
+  }
+
+  String? _resolveServerVideoUrl(String? rawVideoUrl) {
+    if (rawVideoUrl == null) return null;
+
+    final trimmedVideoUrl = rawVideoUrl.trim();
+    if (trimmedVideoUrl.isEmpty) return null;
+
+    final videoUri = Uri.tryParse(trimmedVideoUrl);
+    if (videoUri != null && videoUri.hasScheme) {
+      return videoUri.toString();
+    }
+
+    final baseUri = Uri.parse(it<NetworkService>().baseUrl);
+    return baseUri.resolve(trimmedVideoUrl).toString();
   }
 }

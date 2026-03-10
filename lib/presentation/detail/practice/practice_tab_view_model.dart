@@ -4,10 +4,14 @@ import 'package:bodytalk/data/remote/model/practice/practice_model.dart'
 import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
 import 'package:bodytalk/view_model_interface.dart';
 import 'package:flutter/foundation.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PracticeTabViewModel extends ViewModelInterface {
   final CurriculumRepository curriculumRepository;
   final LocalCacheStore _localCacheStore;
+  final _event = PublishSubject<PracticeTabEvent>();
+
+  Stream<PracticeTabEvent> get event => _event.stream;
 
   PracticeTabViewModel(this.curriculumRepository, this._localCacheStore);
 
@@ -36,8 +40,44 @@ class PracticeTabViewModel extends ViewModelInterface {
       ),
     );
 
-    result.fold((exception) {
-      debugPrint('savePractice exception => ${exception.message}');
-    }, (_) {});
+    result.fold(
+      (exception) {
+        debugPrint('savePractice exception => ${exception.message}');
+        sendEvent(PracticeTabEvent.toastMessage(exception.message));
+      },
+      (_) {
+        sendEvent(const PracticeTabEvent.toastMessage('Practice saved.'));
+      },
+    );
   }
+
+  void sendEvent(PracticeTabEvent event) {
+    if (_event.isClosed) return;
+    _event.add(event);
+  }
+
+  @override
+  void disposeAll() {
+    if (_event.isClosed) return;
+    _event.close();
+  }
+}
+
+sealed class PracticeTabEvent {
+  const PracticeTabEvent();
+
+  const factory PracticeTabEvent.toastMessage(String message) =
+      _PracticeTabToastMessage;
+
+  T when<T>({required T Function(String message) toastMessage}) {
+    return switch (this) {
+      _PracticeTabToastMessage(:final message) => toastMessage(message),
+    };
+  }
+}
+
+final class _PracticeTabToastMessage extends PracticeTabEvent {
+  const _PracticeTabToastMessage(this.message);
+
+  final String message;
 }

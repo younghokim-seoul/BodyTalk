@@ -4,11 +4,14 @@ import 'package:bodytalk/data/local/local_cache_store.dart';
 import 'package:bodytalk/data/remote/model/submit/submit_model.dart' as request;
 import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
 import 'package:bodytalk/view_model_interface.dart';
-import 'package:flutter/foundation.dart';
+import 'package:rxdart/rxdart.dart';
 
 class SubmitTabViewModel extends ViewModelInterface {
   final CurriculumRepository curriculumRepository;
   final LocalCacheStore _localCacheStore;
+  final _event = PublishSubject<SubmitTabEvent>();
+
+  Stream<SubmitTabEvent> get event => _event.stream;
 
   SubmitTabViewModel(this.curriculumRepository, this._localCacheStore);
 
@@ -34,8 +37,44 @@ class SubmitTabViewModel extends ViewModelInterface {
       ),
     );
 
-    result.fold((exception) {
-      debugPrint('submitAssignment exception => ${exception.message}');
-    }, (_) {});
+    result.fold(
+      (exception) {
+        print('submitAssignment exception => ${exception.message}');
+        sendEvent(SubmitTabEvent.toastMessage(exception.message));
+      },
+      (_) {
+        sendEvent(const SubmitTabEvent.toastMessage('Assignment submitted.'));
+      },
+    );
   }
+
+  void sendEvent(SubmitTabEvent event) {
+    if (_event.isClosed) return;
+    _event.add(event);
+  }
+
+  @override
+  void disposeAll() {
+    if (_event.isClosed) return;
+    _event.close();
+  }
+}
+
+sealed class SubmitTabEvent {
+  const SubmitTabEvent();
+
+  const factory SubmitTabEvent.toastMessage(String message) =
+      _SubmitTabToastMessage;
+
+  T when<T>({required T Function(String message) toastMessage}) {
+    return switch (this) {
+      _SubmitTabToastMessage(:final message) => toastMessage(message),
+    };
+  }
+}
+
+final class _SubmitTabToastMessage extends SubmitTabEvent {
+  const _SubmitTabToastMessage(this.message);
+
+  final String message;
 }
