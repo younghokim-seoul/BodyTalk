@@ -2,6 +2,7 @@ import 'package:bodytalk/presentation/detail/detail_screen.dart';
 import 'package:bodytalk/presentation/home/home_screen.dart';
 import 'package:bodytalk/presentation/login/login_screen.dart';
 import 'package:bodytalk/presentation/splash/splash_screen.dart';
+import 'package:bodytalk/presentation/widget/easy_loading_back_button_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,7 +40,7 @@ abstract final class AppRouter {
               child: child,
             );
           },
-          child: const SplashScreen(),
+          child: const EasyLoadingBackButtonGuard(child: SplashScreen()),
         ),
       ),
       GoRoute(
@@ -89,6 +90,6 @@ CustomTransitionPage<void> _buildFadeTransitionPage({
         child: child,
       );
     },
-    child: child,
+    child: EasyLoadingBackButtonGuard(child: child),
   );
 }
