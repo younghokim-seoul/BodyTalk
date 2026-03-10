@@ -134,8 +134,8 @@ _SubmitModel _$SubmitModelFromJson(Map<String, dynamic> json) => _SubmitModel(
   learningId: (json['learning_id'] as num).toInt(),
   curriculumId: (json['curriculum_id'] as num).toInt(),
   submitId: (json['submit_id'] as num).toInt(),
-  video: json['video'] as String,
-  question: json['question'] as String,
+  video: json['video'] as String?,
+  question: json['question'] as String?,
 );
 
 Map<String, dynamic> _$SubmitModelToJson(_SubmitModel instance) =>

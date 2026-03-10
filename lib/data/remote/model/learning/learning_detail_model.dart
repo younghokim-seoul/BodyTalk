@@ -94,8 +94,8 @@ abstract class SubmitModel with _$SubmitModel {
     @JsonKey(name: 'learning_id') required int learningId,
     @JsonKey(name: 'curriculum_id') required int curriculumId,
     @JsonKey(name: 'submit_id') required int submitId,
-    required String video,
-    required String question,
+    String? video,
+    String? question,
   }) = _SubmitModel;
 
   factory SubmitModel.fromJson(Map<String, dynamic> json) =>

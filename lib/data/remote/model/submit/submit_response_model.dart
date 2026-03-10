@@ -10,8 +10,8 @@ abstract class SubmitResponseModel with _$SubmitResponseModel {
     @JsonKey(name: 'learning_id') required int learningId,
     @JsonKey(name: 'curriculum_id') required int curriculumId,
     @JsonKey(name: 'submit_id') required int submitId,
-    required String video,
-    required String question,
+    String? video,
+    String? question,
     @JsonKey(name: 'cre_dt') required DateTime creDt,
     @JsonKey(name: 'upd_dt') required DateTime updDt,
   }) = _SubmitResponseModel;

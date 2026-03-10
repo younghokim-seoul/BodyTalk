@@ -1809,7 +1809,7 @@ as String,
 /// @nodoc
 mixin _$SubmitModel {
 
-@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'learning_id') int get learningId;@JsonKey(name: 'curriculum_id') int get curriculumId;@JsonKey(name: 'submit_id') int get submitId; String get video; String get question;
+@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'learning_id') int get learningId;@JsonKey(name: 'curriculum_id') int get curriculumId;@JsonKey(name: 'submit_id') int get submitId; String? get video; String? get question;
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1842,7 +1842,7 @@ abstract mixin class $SubmitModelCopyWith<$Res>  {
   factory $SubmitModelCopyWith(SubmitModel value, $Res Function(SubmitModel) _then) = _$SubmitModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String video, String question
+@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String? video, String? question
 });
 
 
@@ -1859,15 +1859,15 @@ class _$SubmitModelCopyWithImpl<$Res>
 
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = null,Object? question = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = freezed,Object? question = freezed,}) {
   return _then(_self.copyWith(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,learningId: null == learningId ? _self.learningId : learningId // ignore: cast_nullable_to_non_nullable
 as int,curriculumId: null == curriculumId ? _self.curriculumId : curriculumId // ignore: cast_nullable_to_non_nullable
 as int,submitId: null == submitId ? _self.submitId : submitId // ignore: cast_nullable_to_non_nullable
-as int,video: null == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
-as String,question: null == question ? _self.question : question // ignore: cast_nullable_to_non_nullable
-as String,
+as int,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
+as String?,question: freezed == question ? _self.question : question // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -1952,7 +1952,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String video,  String question)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubmitModel() when $default != null:
 return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question);case _:
@@ -1973,7 +1973,7 @@ return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String video,  String question)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question)  $default,) {final _that = this;
 switch (_that) {
 case _SubmitModel():
 return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question);case _:
@@ -1993,7 +1993,7 @@ return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String video,  String question)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question)?  $default,) {final _that = this;
 switch (_that) {
 case _SubmitModel() when $default != null:
 return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question);case _:
@@ -2008,15 +2008,15 @@ return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,
 @JsonSerializable()
 
 class _SubmitModel implements SubmitModel {
-  const _SubmitModel({@JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'learning_id') required this.learningId, @JsonKey(name: 'curriculum_id') required this.curriculumId, @JsonKey(name: 'submit_id') required this.submitId, required this.video, required this.question});
+  const _SubmitModel({@JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'learning_id') required this.learningId, @JsonKey(name: 'curriculum_id') required this.curriculumId, @JsonKey(name: 'submit_id') required this.submitId, this.video, this.question});
   factory _SubmitModel.fromJson(Map<String, dynamic> json) => _$SubmitModelFromJson(json);
 
 @override@JsonKey(name: 'user_id') final  String userId;
 @override@JsonKey(name: 'learning_id') final  int learningId;
 @override@JsonKey(name: 'curriculum_id') final  int curriculumId;
 @override@JsonKey(name: 'submit_id') final  int submitId;
-@override final  String video;
-@override final  String question;
+@override final  String? video;
+@override final  String? question;
 
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
@@ -2051,7 +2051,7 @@ abstract mixin class _$SubmitModelCopyWith<$Res> implements $SubmitModelCopyWith
   factory _$SubmitModelCopyWith(_SubmitModel value, $Res Function(_SubmitModel) _then) = __$SubmitModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String video, String question
+@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String? video, String? question
 });
 
 
@@ -2068,15 +2068,15 @@ class __$SubmitModelCopyWithImpl<$Res>
 
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = null,Object? question = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = freezed,Object? question = freezed,}) {
   return _then(_SubmitModel(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,learningId: null == learningId ? _self.learningId : learningId // ignore: cast_nullable_to_non_nullable
 as int,curriculumId: null == curriculumId ? _self.curriculumId : curriculumId // ignore: cast_nullable_to_non_nullable
 as int,submitId: null == submitId ? _self.submitId : submitId // ignore: cast_nullable_to_non_nullable
-as int,video: null == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
-as String,question: null == question ? _self.question : question // ignore: cast_nullable_to_non_nullable
-as String,
+as int,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
+as String?,question: freezed == question ? _self.question : question // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

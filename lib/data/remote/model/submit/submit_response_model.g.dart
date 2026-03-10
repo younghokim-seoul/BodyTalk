@@ -12,8 +12,8 @@ _SubmitResponseModel _$SubmitResponseModelFromJson(Map<String, dynamic> json) =>
       learningId: (json['learning_id'] as num).toInt(),
       curriculumId: (json['curriculum_id'] as num).toInt(),
       submitId: (json['submit_id'] as num).toInt(),
-      video: json['video'] as String,
-      question: json['question'] as String,
+      video: json['video'] as String?,
+      question: json['question'] as String?,
       creDt: DateTime.parse(json['cre_dt'] as String),
       updDt: DateTime.parse(json['upd_dt'] as String),
     );
