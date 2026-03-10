@@ -12,6 +12,10 @@ class SubmitVideoPreview extends StatefulWidget {
 }
 
 class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
+  static const _previewAspectRatio = 16 / 9;
+  static const _fallbackVideoWidth = 16.0;
+  static const _fallbackVideoHeight = 9.0;
+
   VideoPlayerController? _controller;
   Future<void>? _initializeFuture;
 
@@ -45,11 +49,7 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
     final controller = _controller;
     if (controller == null || !controller.value.isInitialized) return;
 
-    if (controller.value.isPlaying) {
-      await controller.pause();
-    } else {
-      await controller.play();
-    }
+    await (controller.value.isPlaying ? controller.pause() : controller.play());
 
     if (mounted) {
       setState(() {});
@@ -101,90 +101,104 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
             borderRadius: BorderRadius.circular(12),
             child: ColoredBox(
               color: Colors.black,
-              child: FutureBuilder<void>(
-                future: initializeFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState != ConnectionState.done) {
-                    return const AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Center(
-                        child: CircularProgressIndicator(
+              child: AspectRatio(
+                aspectRatio: _previewAspectRatio,
+                child: FutureBuilder<void>(
+                  future: initializeFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState != ConnectionState.done) {
+                      return _buildCenteredState(
+                        const CircularProgressIndicator(
                           color: AppColors.primaryAccent,
                         ),
-                      ),
-                    );
-                  }
+                      );
+                    }
 
-                  if (snapshot.hasError) {
-                    return const AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Center(
-                        child: Text(
+                    if (snapshot.hasError) {
+                      return _buildCenteredState(
+                        const Text(
                           'Unable to load video.',
                           style: TextStyle(
                             color: AppColors.white,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                    );
-                  }
+                      );
+                    }
 
-                  return Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: controller.value.aspectRatio == 0
-                            ? 16 / 9
-                            : controller.value.aspectRatio,
-                        child: VideoPlayer(controller),
-                      ),
-                      Positioned.fill(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: _togglePlayback,
-                            child: ColoredBox(
-                              color: Colors.black.withValues(
-                                alpha: controller.value.isPlaying ? 0.08 : 0.24,
-                              ),
-                              child: Icon(
-                                controller.value.isPlaying
-                                    ? Icons.pause_circle_filled
-                                    : Icons.play_circle_fill,
-                                size: 64,
-                                color: Colors.white.withValues(alpha: 0.9),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 12,
-                        right: 12,
-                        bottom: 12,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(999),
-                          child: VideoProgressIndicator(
-                            controller,
-                            allowScrubbing: true,
-                            padding: EdgeInsets.zero,
-                            colors: const VideoProgressColors(
-                              playedColor: AppColors.primaryAccent,
-                              bufferedColor: AppColors.slate300,
-                              backgroundColor: AppColors.slate500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
+                    return _buildVideoStack(controller);
+                  },
+                ),
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildCenteredState(Widget child) {
+    return Center(child: child);
+  }
+
+  Widget _buildVideoStack(VideoPlayerController controller) {
+    final videoSize = controller.value.size;
+    final videoWidth = videoSize.width == 0 ? _fallbackVideoWidth : videoSize.width;
+    final videoHeight = videoSize.height == 0 ? _fallbackVideoHeight : videoSize.height;
+    final isPlaying = controller.value.isPlaying;
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned.fill(
+          child: Center(
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: SizedBox(
+                width: videoWidth,
+                height: videoHeight,
+                child: VideoPlayer(controller),
+              ),
+            ),
+          ),
+        ),
+        Positioned.fill(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: _togglePlayback,
+              child: ColoredBox(
+                color: Colors.black.withValues(alpha: isPlaying ? 0.08 : 0.24),
+                child: Icon(
+                  isPlaying
+                      ? Icons.pause_circle_filled
+                      : Icons.play_circle_fill,
+                  size: 64,
+                  color: Colors.white.withValues(alpha: 0.9),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 12,
+          right: 12,
+          bottom: 12,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: VideoProgressIndicator(
+              controller,
+              allowScrubbing: true,
+              padding: EdgeInsets.zero,
+              colors: const VideoProgressColors(
+                playedColor: AppColors.primaryAccent,
+                bufferedColor: AppColors.slate300,
+                backgroundColor: AppColors.slate500,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
