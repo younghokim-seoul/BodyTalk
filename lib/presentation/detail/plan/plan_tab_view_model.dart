@@ -3,7 +3,10 @@ import 'package:bodytalk/data/remote/model/plan/create_plan_model.dart';
 import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
 import 'package:bodytalk/view_model_interface.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
+
+part 'plan_tab_view_model.freezed.dart';
 
 class PlanTabViewModel extends ViewModelInterface {
   final CurriculumRepository curriculumRepository;
@@ -59,21 +62,8 @@ class PlanTabViewModel extends ViewModelInterface {
   }
 }
 
-sealed class PlanTabEvent {
-  const PlanTabEvent();
-
+@freezed
+sealed class PlanTabEvent with _$PlanTabEvent {
   const factory PlanTabEvent.toastMessage(String message) =
       _PlanTabToastMessage;
-
-  T when<T>({required T Function(String message) toastMessage}) {
-    return switch (this) {
-      _PlanTabToastMessage(:final message) => toastMessage(message),
-    };
-  }
-}
-
-final class _PlanTabToastMessage extends PlanTabEvent {
-  const _PlanTabToastMessage(this.message);
-
-  final String message;
 }

@@ -4,7 +4,11 @@ import 'package:bodytalk/data/local/local_cache_store.dart';
 import 'package:bodytalk/data/remote/model/submit/submit_model.dart' as request;
 import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
 import 'package:bodytalk/view_model_interface.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
+
+part 'submit_tab_view_model.freezed.dart';
 
 class SubmitTabViewModel extends ViewModelInterface {
   final CurriculumRepository curriculumRepository;
@@ -39,7 +43,7 @@ class SubmitTabViewModel extends ViewModelInterface {
 
     result.fold(
       (exception) {
-        print('submitAssignment exception => ${exception.message}');
+        debugPrint('submitAssignment exception => ${exception.message}');
         sendEvent(SubmitTabEvent.toastMessage(exception.message));
       },
       (_) {
@@ -60,21 +64,8 @@ class SubmitTabViewModel extends ViewModelInterface {
   }
 }
 
-sealed class SubmitTabEvent {
-  const SubmitTabEvent();
-
+@freezed
+sealed class SubmitTabEvent with _$SubmitTabEvent {
   const factory SubmitTabEvent.toastMessage(String message) =
       _SubmitTabToastMessage;
-
-  T when<T>({required T Function(String message) toastMessage}) {
-    return switch (this) {
-      _SubmitTabToastMessage(:final message) => toastMessage(message),
-    };
-  }
-}
-
-final class _SubmitTabToastMessage extends SubmitTabEvent {
-  const _SubmitTabToastMessage(this.message);
-
-  final String message;
 }

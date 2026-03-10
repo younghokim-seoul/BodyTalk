@@ -4,7 +4,10 @@ import 'package:bodytalk/data/remote/model/practice/practice_model.dart'
 import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
 import 'package:bodytalk/view_model_interface.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
+
+part 'practice_tab_view_model.freezed.dart';
 
 class PracticeTabViewModel extends ViewModelInterface {
   final CurriculumRepository curriculumRepository;
@@ -63,21 +66,8 @@ class PracticeTabViewModel extends ViewModelInterface {
   }
 }
 
-sealed class PracticeTabEvent {
-  const PracticeTabEvent();
-
+@freezed
+sealed class PracticeTabEvent with _$PracticeTabEvent {
   const factory PracticeTabEvent.toastMessage(String message) =
       _PracticeTabToastMessage;
-
-  T when<T>({required T Function(String message) toastMessage}) {
-    return switch (this) {
-      _PracticeTabToastMessage(:final message) => toastMessage(message),
-    };
-  }
-}
-
-final class _PracticeTabToastMessage extends PracticeTabEvent {
-  const _PracticeTabToastMessage(this.message);
-
-  final String message;
 }
