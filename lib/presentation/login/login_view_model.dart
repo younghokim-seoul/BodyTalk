@@ -15,8 +15,8 @@ class LoginViewModel extends ViewModelInterface {
   final _event = PublishSubject<LoginEvent>();
   Stream<LoginEvent> get event => _event.stream;
 
-  final idText = StateFlow<String>(seed: 'student_1');
-  final pwText = StateFlow<String>(seed: ' student1!');
+  final idText = StateFlow<String>();
+  final pwText = StateFlow<String>();
 
   Future<void> login() async {
 
