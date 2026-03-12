@@ -10,14 +10,12 @@ class DioService extends NetworkService with ExceptionHandlerMixin {
   final Dio dio;
 
   DioService(this.dio) {
-    if (!kReleaseMode) {
       dio.options = dioBaseOptions;
-      if (kDebugMode) {
+      if (!kReleaseMode) {
         dio.interceptors.add(
           LogInterceptor(requestBody: true, responseBody: true),
         );
       }
-    }
   }
 
   BaseOptions get dioBaseOptions => BaseOptions(baseUrl: baseUrl, headers: headers);
