@@ -53,6 +53,9 @@ class SubmitTabView extends HookWidget {
       text: existingSubmit?.question,
     );
     final pickedVideo = useState<File?>(null);
+    final pickedVideoName = pickedVideo.value?.path
+        .split(Platform.pathSeparator)
+        .last;
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -70,7 +73,7 @@ class SubmitTabView extends HookWidget {
           ),
         ),
         const Gap(12),
-        _buildUploadBox(context, existingSubmit?.video, pickedVideo),
+        _buildUploadBox(pickedVideo, pickedVideoName),
         const Gap(24),
         InputSection(
           title: '코치에게 질문 하기',
@@ -131,11 +134,10 @@ class SubmitTabView extends HookWidget {
   }
 
   Widget _buildUploadBox(
-    BuildContext context,
-    String? serverVideoUrl,
     ValueNotifier<File?> pickedVideo,
+    String? pickedVideoName,
   ) {
-    final hasVideo = serverVideoUrl != null || pickedVideo.value != null;
+    final hasPickedVideo = pickedVideo.value != null;
 
     Future<void> handlePickVideo() async {
       final video = await VideoPickerHelper.pickVideo();
@@ -144,71 +146,73 @@ class SubmitTabView extends HookWidget {
       }
     }
 
-    return InkWell(
-      onTap: handlePickVideo,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(32),
-        decoration: BoxDecoration(
-          color: AppColors.slate50,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.slate200, width: 2),
-        ),
-        child: Column(
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: AppColors.primaryAccent.withValues(alpha: 0.2),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                hasVideo ? Icons.check_circle : Icons.videocam,
-                color: hasVideo ? Colors.green : AppColors.slate900,
-              ),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: AppColors.slate50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.slate200, width: 2),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: AppColors.primaryAccent.withValues(alpha: 0.2),
+              shape: BoxShape.circle,
             ),
-            const Gap(12),
-            Text(
-              hasVideo
-                  ? (pickedVideo.value != null
-                        ? pickedVideo.value!.path
-                        : '기존 영상이 업로드되어 있습니다.')
-                  : '연습 영상을 업로드해 주세요.',
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: AppColors.slate600,
-              ),
+            child: Icon(
+              hasPickedVideo ? Icons.video_file_rounded : Icons.upload_rounded,
+              color: hasPickedVideo ? Colors.green : AppColors.slate900,
             ),
-            const Gap(16),
-            ElevatedButton(
-              onPressed: handlePickVideo,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryAccent,
-                foregroundColor: AppColors.slate900,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 10,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                elevation: 2,
-                shadowColor: Colors.black.withValues(alpha: 0.1),
-              ),
-              child: Text(
-                hasVideo ? '영상 변경' : '영상 업로드',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+          ),
+          const Gap(12),
+          Text(
+            hasPickedVideo
+                ? '$pickedVideoName 파일이 선택되었습니다.'
+                : '연습 영상을 선택해 업로드해 주세요.',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.slate600,
             ),
+          ),
+          const Gap(8),
+          const Text(
+            '선택한 영상은 아래 미리보기에서 확인할 수 있습니다.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: AppColors.slate400,
+            ),
+          ),
+          const Gap(16),
+          ElevatedButton(
+            onPressed: handlePickVideo,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primaryAccent,
+              foregroundColor: AppColors.slate900,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 2,
+              shadowColor: Colors.black.withValues(alpha: 0.1),
+            ),
+            child: const Text(
+              '영상 업로드',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ),
+          if (hasPickedVideo) ...[
+            const Gap(24),
+            SubmitSelectedVideoPreview(videoFile: pickedVideo.value!),
           ],
-        ),
+        ],
       ),
     );
   }

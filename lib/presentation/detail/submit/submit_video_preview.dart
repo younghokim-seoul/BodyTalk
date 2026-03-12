@@ -1,23 +1,68 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:bodytalk/presentation/util/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class SubmitVideoPreview extends StatefulWidget {
+class SubmitVideoPreview extends StatelessWidget {
   final String videoUrl;
 
   const SubmitVideoPreview({super.key, required this.videoUrl});
 
   @override
-  State<SubmitVideoPreview> createState() => _SubmitVideoPreviewState();
+  Widget build(BuildContext context) {
+    return _VideoPreviewCard(
+      title: '제출한 영상',
+      sourceKey: videoUrl,
+      controllerBuilder: () =>
+          VideoPlayerController.networkUrl(Uri.parse(videoUrl)),
+    );
+  }
 }
 
-class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
+class SubmitSelectedVideoPreview extends StatelessWidget {
+  final File videoFile;
+
+  const SubmitSelectedVideoPreview({super.key, required this.videoFile});
+
+  @override
+  Widget build(BuildContext context) {
+    return _VideoPreviewCard(
+      title: '선택한 영상',
+      sourceKey: videoFile.path,
+      controllerBuilder: () => VideoPlayerController.file(videoFile),
+    );
+  }
+}
+
+typedef _VideoPlayerControllerBuilder = VideoPlayerController Function();
+
+class _VideoPreviewCard extends StatefulWidget {
+  final String title;
+  final String sourceKey;
+  final _VideoPlayerControllerBuilder controllerBuilder;
+
+  const _VideoPreviewCard({
+    required this.title,
+    required this.sourceKey,
+    required this.controllerBuilder,
+  });
+
+  @override
+  State<_VideoPreviewCard> createState() => _VideoPreviewCardState();
+}
+
+class _VideoPreviewCardState extends State<_VideoPreviewCard> {
   static const _previewAspectRatio = 16 / 9;
   static const _fallbackVideoWidth = 16.0;
   static const _fallbackVideoHeight = 9.0;
+  static const _overlayHideDelay = Duration(seconds: 2);
 
   VideoPlayerController? _controller;
   Future<void>? _initializeFuture;
+  Timer? _overlayHideTimer;
+  bool _isPlaybackOverlayVisible = true;
 
   @override
   void initState() {
@@ -26,23 +71,22 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
   }
 
   @override
-  void didUpdateWidget(covariant SubmitVideoPreview oldWidget) {
+  void didUpdateWidget(covariant _VideoPreviewCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.videoUrl != widget.videoUrl) {
+    if (oldWidget.sourceKey != widget.sourceKey) {
       _disposePlayer();
       _initializePlayer();
     }
   }
 
   void _initializePlayer() {
-    final controller = VideoPlayerController.networkUrl(
-      Uri.parse(widget.videoUrl),
-    );
+    final controller = widget.controllerBuilder();
 
     controller.setLooping(true);
 
     _controller = controller;
     _initializeFuture = controller.initialize();
+    _isPlaybackOverlayVisible = true;
   }
 
   Future<void> _togglePlayback() async {
@@ -52,11 +96,57 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
     await (controller.value.isPlaying ? controller.pause() : controller.play());
 
     if (mounted) {
+      if (controller.value.isPlaying) {
+        _showPlaybackOverlay();
+        _scheduleOverlayHide();
+      } else {
+        _cancelOverlayHideTimer();
+        _showPlaybackOverlay();
+      }
       setState(() {});
     }
   }
 
+  void _handleVideoTap() {
+    final controller = _controller;
+    if (controller == null || !controller.value.isInitialized) return;
+
+    if (controller.value.isPlaying && !_isPlaybackOverlayVisible) {
+      _showPlaybackOverlay();
+      _scheduleOverlayHide();
+      return;
+    }
+
+    _togglePlayback();
+  }
+
+  void _showPlaybackOverlay() {
+    if (_isPlaybackOverlayVisible) return;
+
+    setState(() {
+      _isPlaybackOverlayVisible = true;
+    });
+  }
+
+  void _scheduleOverlayHide() {
+    _cancelOverlayHideTimer();
+    _overlayHideTimer = Timer(_overlayHideDelay, () {
+      final controller = _controller;
+      if (!mounted || controller == null || !controller.value.isPlaying) return;
+
+      setState(() {
+        _isPlaybackOverlayVisible = false;
+      });
+    });
+  }
+
+  void _cancelOverlayHideTimer() {
+    _overlayHideTimer?.cancel();
+    _overlayHideTimer = null;
+  }
+
   void _disposePlayer() {
+    _cancelOverlayHideTimer();
     final controller = _controller;
     _controller = null;
     _initializeFuture = null;
@@ -88,9 +178,9 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Submitted Video',
-            style: TextStyle(
+          Text(
+            widget.title,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
               color: AppColors.slate900,
@@ -117,7 +207,7 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
                     if (snapshot.hasError) {
                       return _buildCenteredState(
                         const Text(
-                          'Unable to load video.',
+                          '영상을 불러오지 못했습니다.',
                           style: TextStyle(
                             color: AppColors.white,
                             fontWeight: FontWeight.w600,
@@ -143,9 +233,14 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
 
   Widget _buildVideoStack(VideoPlayerController controller) {
     final videoSize = controller.value.size;
-    final videoWidth = videoSize.width == 0 ? _fallbackVideoWidth : videoSize.width;
-    final videoHeight = videoSize.height == 0 ? _fallbackVideoHeight : videoSize.height;
+    final videoWidth = videoSize.width == 0
+        ? _fallbackVideoWidth
+        : videoSize.width;
+    final videoHeight = videoSize.height == 0
+        ? _fallbackVideoHeight
+        : videoSize.height;
     final isPlaying = controller.value.isPlaying;
+    final showPlaybackOverlay = !isPlaying || _isPlaybackOverlayVisible;
 
     return Stack(
       alignment: Alignment.center,
@@ -166,15 +261,25 @@ class _SubmitVideoPreviewState extends State<SubmitVideoPreview> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: _togglePlayback,
-              child: ColoredBox(
-                color: Colors.black.withValues(alpha: isPlaying ? 0.08 : 0.24),
-                child: Icon(
-                  isPlaying
-                      ? Icons.pause_circle_filled
-                      : Icons.play_circle_fill,
-                  size: 64,
-                  color: Colors.white.withValues(alpha: 0.9),
+              onTap: _handleVideoTap,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 180),
+                opacity: showPlaybackOverlay ? 1 : 0,
+                child: ColoredBox(
+                  color: Colors.black.withValues(
+                    alpha: isPlaying ? 0.08 : 0.24,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      isPlaying
+                          ? Icons.pause_circle_filled
+                          : Icons.play_circle_fill,
+                      size: 64,
+                      color: Colors.white.withValues(alpha: 0.9),
+                    ),
+                  ),
                 ),
               ),
             ),
