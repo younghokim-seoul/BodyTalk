@@ -31,6 +31,13 @@ class SubmitTabView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useAutomaticKeepAlive();
+    final currentSubmit = useState<SubmitModel?>(detail.submit);
+
+    useEffect(() {
+      currentSubmit.value = detail.submit;
+      return null;
+    }, [detail.submit?.submitId, learningId, curriculumId]);
+
     useEffect(() {
       final subscription = _viewModel.event.listen((event) {
         event.when(
@@ -47,7 +54,7 @@ class SubmitTabView extends HookWidget {
       };
     }, [_viewModel]);
 
-    final existingSubmit = detail.submit;
+    final existingSubmit = currentSubmit.value;
     final serverVideoUrl = _resolveServerVideoUrl(existingSubmit?.video);
     final questionController = useTextEditingController(
       text: existingSubmit?.question,
@@ -56,6 +63,17 @@ class SubmitTabView extends HookWidget {
     final pickedVideoName = pickedVideo.value?.path
         .split(Platform.pathSeparator)
         .last;
+
+    useEffect(() {
+      final nextQuestion = currentSubmit.value?.question ?? '';
+      if (questionController.text == nextQuestion) return null;
+
+      questionController.value = TextEditingValue(
+        text: nextQuestion,
+        selection: TextSelection.collapsed(offset: nextQuestion.length),
+      );
+      return null;
+    }, [currentSubmit.value?.submitId, currentSubmit.value?.question]);
 
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -98,12 +116,19 @@ class SubmitTabView extends HookWidget {
             onPressed: () async {
               FocusScope.of(context).unfocus();
               await EasyLoading.show();
-              await _viewModel.submitAssignment(
+              final submitted = await _viewModel.submitAssignment(
                 learningId: learningId,
                 curriculumId: curriculumId,
                 question: questionController.text,
                 video: pickedVideo.value,
               );
+              if (!context.mounted || submitted == null) return;
+
+              currentSubmit.value = submitted;
+              final submittedVideoUrl = _resolveServerVideoUrl(submitted.video);
+              if (submittedVideoUrl != null) {
+                pickedVideo.value = null;
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primaryAccent,

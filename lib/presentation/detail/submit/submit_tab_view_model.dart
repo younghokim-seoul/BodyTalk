@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:bodytalk/data/local/local_cache_store.dart';
+import 'package:bodytalk/data/remote/model/learning/learning_detail_model.dart'
+    as learning;
 import 'package:bodytalk/data/remote/model/submit/submit_model.dart' as request;
 import 'package:bodytalk/data/remote/repository/curriculum_repository.dart';
 import 'package:bodytalk/view_model_interface.dart';
@@ -19,7 +21,7 @@ class SubmitTabViewModel extends ViewModelInterface {
 
   SubmitTabViewModel(this.curriculumRepository, this._localCacheStore);
 
-  Future<void> submitAssignment({
+  Future<learning.SubmitModel?> submitAssignment({
     required int learningId,
     required int curriculumId,
     String? question,
@@ -41,13 +43,22 @@ class SubmitTabViewModel extends ViewModelInterface {
       ),
     );
 
-    result.fold(
+    return result.fold(
       (exception) {
         debugPrint('submitAssignment exception => ${exception.message}');
         sendEvent(SubmitTabEvent.toastMessage(exception.message));
+        return null;
       },
-      (_) {
+      (response) {
         sendEvent(const SubmitTabEvent.toastMessage('Assignment submitted.'));
+        return learning.SubmitModel(
+          userId: response.userId,
+          learningId: response.learningId,
+          curriculumId: response.curriculumId,
+          submitId: response.submitId,
+          video: response.video,
+          question: response.question,
+        );
       },
     );
   }
