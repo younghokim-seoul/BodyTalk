@@ -49,7 +49,7 @@ class PracticeTabViewModel extends ViewModelInterface {
         sendEvent(PracticeTabEvent.toastMessage(exception.message));
       },
       (_) {
-        sendEvent(const PracticeTabEvent.toastMessage('Practice saved.'));
+        sendEvent(const PracticeTabEvent.toastMessage('Practice 등록에 완료 되었습니다.'));
       },
     );
   }

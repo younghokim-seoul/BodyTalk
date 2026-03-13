@@ -28,7 +28,7 @@ class PlanTabView extends HookWidget {
     useEffect(() {
       final subscription = _viewModel.event.listen((event) {
         event.when(
-          toastMessage: (message) => ToastHelper.show(message: message,gravity: ToastGravity.TOP),
+          toastMessage: (message) => ToastHelper.show(message: message),
         );
       });
 

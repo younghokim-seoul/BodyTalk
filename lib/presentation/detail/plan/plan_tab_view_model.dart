@@ -45,7 +45,7 @@ class PlanTabViewModel extends ViewModelInterface {
         sendEvent(PlanTabEvent.toastMessage(exception.message));
       },
       (_) {
-        sendEvent(const PlanTabEvent.toastMessage('Plan saved.'));
+        sendEvent(const PlanTabEvent.toastMessage('Plan 등록에 완료 되었습니다.'));
       },
     );
   }
