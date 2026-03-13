@@ -86,9 +86,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       },
                       child: ExtendedNestedScrollView(
                         pinnedHeaderSliverHeightBuilder: () {
-                          return (AppSize.screenWidth * 9 / 16) +
-                              AppSize.statusBarHeight -
-                              AppSize.ratioHeight(14);
+                          return DetailScreen.tabBarHeight;
                         },
                         onlyOneScrollInBody: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -133,7 +131,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             SliverPersistentHeader(
-                              pinned: true,
+                              pinned: false,
                               delegate: StickyDelegateContainer(
                                 minHeight: AppSize.screenWidth * 9 / 16,
                                 maxHeight: AppSize.screenWidth * 9 / 16,
