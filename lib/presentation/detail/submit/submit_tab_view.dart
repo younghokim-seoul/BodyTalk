@@ -56,6 +56,8 @@ class SubmitTabView extends HookWidget {
 
     final existingSubmit = currentSubmit.value;
     final serverVideoUrl = _resolveServerVideoUrl(existingSubmit?.video);
+    final coachFeedback = existingSubmit?.answer?.trim();
+    final hasCoachFeedback = coachFeedback != null && coachFeedback.isNotEmpty;
     final questionController = useTextEditingController(
       text: existingSubmit?.question,
     );
@@ -110,6 +112,10 @@ class SubmitTabView extends HookWidget {
           ),
           suffixIcon: const Icon(Icons.edit_note, color: AppColors.slate300),
         ),
+        if (hasCoachFeedback) ...[
+          const Gap(24),
+          _buildCoachFeedbackView(coachFeedback),
+        ],
         const Gap(24),
         BounceTapper(
           child: ElevatedButton(
@@ -237,6 +243,41 @@ class SubmitTabView extends HookWidget {
             const Gap(24),
             SubmitSelectedVideoPreview(videoFile: pickedVideo.value!),
           ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCoachFeedbackView(String answer) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.slate50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.slate200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '코치의 피드백',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppColors.slate900,
+            ),
+          ),
+          const Gap(12),
+          Text(
+            answer,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              height: 1.6,
+              color: AppColors.slate700,
+            ),
+          ),
         ],
       ),
     );

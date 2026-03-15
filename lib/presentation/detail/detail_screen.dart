@@ -158,7 +158,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     Text(
                                       detail.curriculum.note,
                                       style: const TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w900,
                                         color: AppColors.primaryYellow,
                                         letterSpacing: 1.2,
@@ -168,8 +168,8 @@ class _DetailScreenState extends State<DetailScreen> {
                                     Text(
                                       detail.curriculum.description,
                                       style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
                                         color: AppColors.slate900,
                                       ),
                                     ),

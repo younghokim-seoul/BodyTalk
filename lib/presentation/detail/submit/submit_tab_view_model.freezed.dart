@@ -12,7 +12,7 @@ part of 'submit_tab_view_model.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$SubmitTabEvent {
+mixin _$SubmitTabEvent implements DiagnosticableTreeMixin {
 
  String get message;
 /// Create a copy of SubmitTabEvent
@@ -22,6 +22,12 @@ mixin _$SubmitTabEvent {
 $SubmitTabEventCopyWith<SubmitTabEvent> get copyWith => _$SubmitTabEventCopyWithImpl<SubmitTabEvent>(this as SubmitTabEvent, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'SubmitTabEvent'))
+    ..add(DiagnosticsProperty('message', message));
+}
 
 @override
 bool operator ==(Object other) {
@@ -33,7 +39,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,message);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'SubmitTabEvent(message: $message)';
 }
 
@@ -199,7 +205,7 @@ return toastMessage(_that.message);case _:
 /// @nodoc
 
 
-class _SubmitTabToastMessage implements SubmitTabEvent {
+class _SubmitTabToastMessage with DiagnosticableTreeMixin implements SubmitTabEvent {
   const _SubmitTabToastMessage(this.message);
   
 
@@ -212,6 +218,12 @@ class _SubmitTabToastMessage implements SubmitTabEvent {
 _$SubmitTabToastMessageCopyWith<_SubmitTabToastMessage> get copyWith => __$SubmitTabToastMessageCopyWithImpl<_SubmitTabToastMessage>(this, _$identity);
 
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'SubmitTabEvent.toastMessage'))
+    ..add(DiagnosticsProperty('message', message));
+}
 
 @override
 bool operator ==(Object other) {
@@ -223,7 +235,7 @@ bool operator ==(Object other) {
 int get hashCode => Object.hash(runtimeType,message);
 
 @override
-String toString() {
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   return 'SubmitTabEvent.toastMessage(message: $message)';
 }
 

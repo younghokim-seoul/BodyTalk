@@ -38,6 +38,7 @@ class PracticeTabView extends HookWidget {
     }, [_viewModel]);
 
     final practicePlaceholders = detail.curriculum.placeholders.practice;
+    final practiceTitles = detail.curriculum.titles?.practice;
     final existingPractice = detail.practice;
 
     final recognitionController = useTextEditingController();
@@ -60,24 +61,28 @@ class PracticeTabView extends HookWidget {
         const Gap(24),
         InputSection(
           title: '인지 계획',
+          descriptionText: practiceTitles?.recognition,
           hintText: practicePlaceholders.recognition,
           controller: recognitionController,
         ),
         const Gap(24),
         InputSection(
           title: '동기 계획',
+          descriptionText: practiceTitles?.motive,
           hintText: practicePlaceholders.motive,
           controller: motivationController,
         ),
         const Gap(24),
         InputSection(
           title: '행동 계획',
+          descriptionText: practiceTitles?.active,
           hintText: practicePlaceholders.active,
           controller: actionController,
         ),
         const Gap(24),
         InputSection(
           title: '맥락 계획',
+          descriptionText: practiceTitles?.context,
           hintText: practicePlaceholders.context,
           controller: contextPlanController,
         ),

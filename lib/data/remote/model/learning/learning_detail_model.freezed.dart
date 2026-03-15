@@ -377,7 +377,7 @@ $SubmitModelCopyWith<$Res>? get submit {
 /// @nodoc
 mixin _$CurriculumDetailModel {
 
- int get id; String get name; String get description; String get note; String get image; PlaceholdersModel get placeholders;
+ int get id; String get name; String get description; String get note; String get image; PlaceholdersModel get placeholders; TitlesModel? get titles;
 /// Create a copy of CurriculumDetailModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -390,16 +390,16 @@ $CurriculumDetailModelCopyWith<CurriculumDetailModel> get copyWith => _$Curricul
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurriculumDetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.note, note) || other.note == note)&&(identical(other.image, image) || other.image == image)&&(identical(other.placeholders, placeholders) || other.placeholders == placeholders));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CurriculumDetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.note, note) || other.note == note)&&(identical(other.image, image) || other.image == image)&&(identical(other.placeholders, placeholders) || other.placeholders == placeholders)&&(identical(other.titles, titles) || other.titles == titles));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,note,image,placeholders);
+int get hashCode => Object.hash(runtimeType,id,name,description,note,image,placeholders,titles);
 
 @override
 String toString() {
-  return 'CurriculumDetailModel(id: $id, name: $name, description: $description, note: $note, image: $image, placeholders: $placeholders)';
+  return 'CurriculumDetailModel(id: $id, name: $name, description: $description, note: $note, image: $image, placeholders: $placeholders, titles: $titles)';
 }
 
 
@@ -410,11 +410,11 @@ abstract mixin class $CurriculumDetailModelCopyWith<$Res>  {
   factory $CurriculumDetailModelCopyWith(CurriculumDetailModel value, $Res Function(CurriculumDetailModel) _then) = _$CurriculumDetailModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, String description, String note, String image, PlaceholdersModel placeholders
+ int id, String name, String description, String note, String image, PlaceholdersModel placeholders, TitlesModel? titles
 });
 
 
-$PlaceholdersModelCopyWith<$Res> get placeholders;
+$PlaceholdersModelCopyWith<$Res> get placeholders;$TitlesModelCopyWith<$Res>? get titles;
 
 }
 /// @nodoc
@@ -427,7 +427,7 @@ class _$CurriculumDetailModelCopyWithImpl<$Res>
 
 /// Create a copy of CurriculumDetailModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? note = null,Object? image = null,Object? placeholders = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? note = null,Object? image = null,Object? placeholders = null,Object? titles = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -435,7 +435,8 @@ as String,description: null == description ? _self.description : description // 
 as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,placeholders: null == placeholders ? _self.placeholders : placeholders // ignore: cast_nullable_to_non_nullable
-as PlaceholdersModel,
+as PlaceholdersModel,titles: freezed == titles ? _self.titles : titles // ignore: cast_nullable_to_non_nullable
+as TitlesModel?,
   ));
 }
 /// Create a copy of CurriculumDetailModel
@@ -446,6 +447,18 @@ $PlaceholdersModelCopyWith<$Res> get placeholders {
   
   return $PlaceholdersModelCopyWith<$Res>(_self.placeholders, (value) {
     return _then(_self.copyWith(placeholders: value));
+  });
+}/// Create a copy of CurriculumDetailModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TitlesModelCopyWith<$Res>? get titles {
+    if (_self.titles == null) {
+    return null;
+  }
+
+  return $TitlesModelCopyWith<$Res>(_self.titles!, (value) {
+    return _then(_self.copyWith(titles: value));
   });
 }
 }
@@ -529,10 +542,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String description,  String note,  String image,  PlaceholdersModel placeholders)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  String description,  String note,  String image,  PlaceholdersModel placeholders,  TitlesModel? titles)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CurriculumDetailModel() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_that.placeholders);case _:
+return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_that.placeholders,_that.titles);case _:
   return orElse();
 
 }
@@ -550,10 +563,10 @@ return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String description,  String note,  String image,  PlaceholdersModel placeholders)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  String description,  String note,  String image,  PlaceholdersModel placeholders,  TitlesModel? titles)  $default,) {final _that = this;
 switch (_that) {
 case _CurriculumDetailModel():
-return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_that.placeholders);case _:
+return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_that.placeholders,_that.titles);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -570,10 +583,10 @@ return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String description,  String note,  String image,  PlaceholdersModel placeholders)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  String description,  String note,  String image,  PlaceholdersModel placeholders,  TitlesModel? titles)?  $default,) {final _that = this;
 switch (_that) {
 case _CurriculumDetailModel() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_that.placeholders);case _:
+return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_that.placeholders,_that.titles);case _:
   return null;
 
 }
@@ -585,7 +598,7 @@ return $default(_that.id,_that.name,_that.description,_that.note,_that.image,_th
 @JsonSerializable()
 
 class _CurriculumDetailModel implements CurriculumDetailModel {
-  const _CurriculumDetailModel({required this.id, required this.name, required this.description, required this.note, required this.image, required this.placeholders});
+  const _CurriculumDetailModel({required this.id, required this.name, required this.description, required this.note, required this.image, required this.placeholders, this.titles});
   factory _CurriculumDetailModel.fromJson(Map<String, dynamic> json) => _$CurriculumDetailModelFromJson(json);
 
 @override final  int id;
@@ -594,6 +607,7 @@ class _CurriculumDetailModel implements CurriculumDetailModel {
 @override final  String note;
 @override final  String image;
 @override final  PlaceholdersModel placeholders;
+@override final  TitlesModel? titles;
 
 /// Create a copy of CurriculumDetailModel
 /// with the given fields replaced by the non-null parameter values.
@@ -608,16 +622,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CurriculumDetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.note, note) || other.note == note)&&(identical(other.image, image) || other.image == image)&&(identical(other.placeholders, placeholders) || other.placeholders == placeholders));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CurriculumDetailModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.note, note) || other.note == note)&&(identical(other.image, image) || other.image == image)&&(identical(other.placeholders, placeholders) || other.placeholders == placeholders)&&(identical(other.titles, titles) || other.titles == titles));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,note,image,placeholders);
+int get hashCode => Object.hash(runtimeType,id,name,description,note,image,placeholders,titles);
 
 @override
 String toString() {
-  return 'CurriculumDetailModel(id: $id, name: $name, description: $description, note: $note, image: $image, placeholders: $placeholders)';
+  return 'CurriculumDetailModel(id: $id, name: $name, description: $description, note: $note, image: $image, placeholders: $placeholders, titles: $titles)';
 }
 
 
@@ -628,11 +642,11 @@ abstract mixin class _$CurriculumDetailModelCopyWith<$Res> implements $Curriculu
   factory _$CurriculumDetailModelCopyWith(_CurriculumDetailModel value, $Res Function(_CurriculumDetailModel) _then) = __$CurriculumDetailModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, String description, String note, String image, PlaceholdersModel placeholders
+ int id, String name, String description, String note, String image, PlaceholdersModel placeholders, TitlesModel? titles
 });
 
 
-@override $PlaceholdersModelCopyWith<$Res> get placeholders;
+@override $PlaceholdersModelCopyWith<$Res> get placeholders;@override $TitlesModelCopyWith<$Res>? get titles;
 
 }
 /// @nodoc
@@ -645,7 +659,7 @@ class __$CurriculumDetailModelCopyWithImpl<$Res>
 
 /// Create a copy of CurriculumDetailModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? note = null,Object? image = null,Object? placeholders = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? note = null,Object? image = null,Object? placeholders = null,Object? titles = freezed,}) {
   return _then(_CurriculumDetailModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -653,7 +667,8 @@ as String,description: null == description ? _self.description : description // 
 as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
 as String,placeholders: null == placeholders ? _self.placeholders : placeholders // ignore: cast_nullable_to_non_nullable
-as PlaceholdersModel,
+as PlaceholdersModel,titles: freezed == titles ? _self.titles : titles // ignore: cast_nullable_to_non_nullable
+as TitlesModel?,
   ));
 }
 
@@ -665,6 +680,18 @@ $PlaceholdersModelCopyWith<$Res> get placeholders {
   
   return $PlaceholdersModelCopyWith<$Res>(_self.placeholders, (value) {
     return _then(_self.copyWith(placeholders: value));
+  });
+}/// Create a copy of CurriculumDetailModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TitlesModelCopyWith<$Res>? get titles {
+    if (_self.titles == null) {
+    return null;
+  }
+
+  return $TitlesModelCopyWith<$Res>(_self.titles!, (value) {
+    return _then(_self.copyWith(titles: value));
   });
 }
 }
@@ -1245,6 +1272,580 @@ as String,
 
 
 /// @nodoc
+mixin _$TitlesModel {
+
+ TitleContentModel get plan; TitleContentModel get practice;
+/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TitlesModelCopyWith<TitlesModel> get copyWith => _$TitlesModelCopyWithImpl<TitlesModel>(this as TitlesModel, _$identity);
+
+  /// Serializes this TitlesModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TitlesModel&&(identical(other.plan, plan) || other.plan == plan)&&(identical(other.practice, practice) || other.practice == practice));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,plan,practice);
+
+@override
+String toString() {
+  return 'TitlesModel(plan: $plan, practice: $practice)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TitlesModelCopyWith<$Res>  {
+  factory $TitlesModelCopyWith(TitlesModel value, $Res Function(TitlesModel) _then) = _$TitlesModelCopyWithImpl;
+@useResult
+$Res call({
+ TitleContentModel plan, TitleContentModel practice
+});
+
+
+$TitleContentModelCopyWith<$Res> get plan;$TitleContentModelCopyWith<$Res> get practice;
+
+}
+/// @nodoc
+class _$TitlesModelCopyWithImpl<$Res>
+    implements $TitlesModelCopyWith<$Res> {
+  _$TitlesModelCopyWithImpl(this._self, this._then);
+
+  final TitlesModel _self;
+  final $Res Function(TitlesModel) _then;
+
+/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? plan = null,Object? practice = null,}) {
+  return _then(_self.copyWith(
+plan: null == plan ? _self.plan : plan // ignore: cast_nullable_to_non_nullable
+as TitleContentModel,practice: null == practice ? _self.practice : practice // ignore: cast_nullable_to_non_nullable
+as TitleContentModel,
+  ));
+}
+/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TitleContentModelCopyWith<$Res> get plan {
+  
+  return $TitleContentModelCopyWith<$Res>(_self.plan, (value) {
+    return _then(_self.copyWith(plan: value));
+  });
+}/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TitleContentModelCopyWith<$Res> get practice {
+  
+  return $TitleContentModelCopyWith<$Res>(_self.practice, (value) {
+    return _then(_self.copyWith(practice: value));
+  });
+}
+}
+
+
+/// Adds pattern-matching-related methods to [TitlesModel].
+extension TitlesModelPatterns on TitlesModel {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TitlesModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TitlesModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TitlesModel value)  $default,){
+final _that = this;
+switch (_that) {
+case _TitlesModel():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TitlesModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TitlesModel() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( TitleContentModel plan,  TitleContentModel practice)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TitlesModel() when $default != null:
+return $default(_that.plan,_that.practice);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( TitleContentModel plan,  TitleContentModel practice)  $default,) {final _that = this;
+switch (_that) {
+case _TitlesModel():
+return $default(_that.plan,_that.practice);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( TitleContentModel plan,  TitleContentModel practice)?  $default,) {final _that = this;
+switch (_that) {
+case _TitlesModel() when $default != null:
+return $default(_that.plan,_that.practice);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TitlesModel implements TitlesModel {
+  const _TitlesModel({required this.plan, required this.practice});
+  factory _TitlesModel.fromJson(Map<String, dynamic> json) => _$TitlesModelFromJson(json);
+
+@override final  TitleContentModel plan;
+@override final  TitleContentModel practice;
+
+/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TitlesModelCopyWith<_TitlesModel> get copyWith => __$TitlesModelCopyWithImpl<_TitlesModel>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TitlesModelToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TitlesModel&&(identical(other.plan, plan) || other.plan == plan)&&(identical(other.practice, practice) || other.practice == practice));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,plan,practice);
+
+@override
+String toString() {
+  return 'TitlesModel(plan: $plan, practice: $practice)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TitlesModelCopyWith<$Res> implements $TitlesModelCopyWith<$Res> {
+  factory _$TitlesModelCopyWith(_TitlesModel value, $Res Function(_TitlesModel) _then) = __$TitlesModelCopyWithImpl;
+@override @useResult
+$Res call({
+ TitleContentModel plan, TitleContentModel practice
+});
+
+
+@override $TitleContentModelCopyWith<$Res> get plan;@override $TitleContentModelCopyWith<$Res> get practice;
+
+}
+/// @nodoc
+class __$TitlesModelCopyWithImpl<$Res>
+    implements _$TitlesModelCopyWith<$Res> {
+  __$TitlesModelCopyWithImpl(this._self, this._then);
+
+  final _TitlesModel _self;
+  final $Res Function(_TitlesModel) _then;
+
+/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? plan = null,Object? practice = null,}) {
+  return _then(_TitlesModel(
+plan: null == plan ? _self.plan : plan // ignore: cast_nullable_to_non_nullable
+as TitleContentModel,practice: null == practice ? _self.practice : practice // ignore: cast_nullable_to_non_nullable
+as TitleContentModel,
+  ));
+}
+
+/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TitleContentModelCopyWith<$Res> get plan {
+  
+  return $TitleContentModelCopyWith<$Res>(_self.plan, (value) {
+    return _then(_self.copyWith(plan: value));
+  });
+}/// Create a copy of TitlesModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$TitleContentModelCopyWith<$Res> get practice {
+  
+  return $TitleContentModelCopyWith<$Res>(_self.practice, (value) {
+    return _then(_self.copyWith(practice: value));
+  });
+}
+}
+
+
+/// @nodoc
+mixin _$TitleContentModel {
+
+ String get recognition; String get motive; String get active; String get context;
+/// Create a copy of TitleContentModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TitleContentModelCopyWith<TitleContentModel> get copyWith => _$TitleContentModelCopyWithImpl<TitleContentModel>(this as TitleContentModel, _$identity);
+
+  /// Serializes this TitleContentModel to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TitleContentModel&&(identical(other.recognition, recognition) || other.recognition == recognition)&&(identical(other.motive, motive) || other.motive == motive)&&(identical(other.active, active) || other.active == active)&&(identical(other.context, context) || other.context == context));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,recognition,motive,active,context);
+
+@override
+String toString() {
+  return 'TitleContentModel(recognition: $recognition, motive: $motive, active: $active, context: $context)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TitleContentModelCopyWith<$Res>  {
+  factory $TitleContentModelCopyWith(TitleContentModel value, $Res Function(TitleContentModel) _then) = _$TitleContentModelCopyWithImpl;
+@useResult
+$Res call({
+ String recognition, String motive, String active, String context
+});
+
+
+
+
+}
+/// @nodoc
+class _$TitleContentModelCopyWithImpl<$Res>
+    implements $TitleContentModelCopyWith<$Res> {
+  _$TitleContentModelCopyWithImpl(this._self, this._then);
+
+  final TitleContentModel _self;
+  final $Res Function(TitleContentModel) _then;
+
+/// Create a copy of TitleContentModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? recognition = null,Object? motive = null,Object? active = null,Object? context = null,}) {
+  return _then(_self.copyWith(
+recognition: null == recognition ? _self.recognition : recognition // ignore: cast_nullable_to_non_nullable
+as String,motive: null == motive ? _self.motive : motive // ignore: cast_nullable_to_non_nullable
+as String,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
+as String,context: null == context ? _self.context : context // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [TitleContentModel].
+extension TitleContentModelPatterns on TitleContentModel {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TitleContentModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TitleContentModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TitleContentModel value)  $default,){
+final _that = this;
+switch (_that) {
+case _TitleContentModel():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TitleContentModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TitleContentModel() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String recognition,  String motive,  String active,  String context)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TitleContentModel() when $default != null:
+return $default(_that.recognition,_that.motive,_that.active,_that.context);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String recognition,  String motive,  String active,  String context)  $default,) {final _that = this;
+switch (_that) {
+case _TitleContentModel():
+return $default(_that.recognition,_that.motive,_that.active,_that.context);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String recognition,  String motive,  String active,  String context)?  $default,) {final _that = this;
+switch (_that) {
+case _TitleContentModel() when $default != null:
+return $default(_that.recognition,_that.motive,_that.active,_that.context);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TitleContentModel implements TitleContentModel {
+  const _TitleContentModel({required this.recognition, required this.motive, required this.active, required this.context});
+  factory _TitleContentModel.fromJson(Map<String, dynamic> json) => _$TitleContentModelFromJson(json);
+
+@override final  String recognition;
+@override final  String motive;
+@override final  String active;
+@override final  String context;
+
+/// Create a copy of TitleContentModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TitleContentModelCopyWith<_TitleContentModel> get copyWith => __$TitleContentModelCopyWithImpl<_TitleContentModel>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TitleContentModelToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TitleContentModel&&(identical(other.recognition, recognition) || other.recognition == recognition)&&(identical(other.motive, motive) || other.motive == motive)&&(identical(other.active, active) || other.active == active)&&(identical(other.context, context) || other.context == context));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,recognition,motive,active,context);
+
+@override
+String toString() {
+  return 'TitleContentModel(recognition: $recognition, motive: $motive, active: $active, context: $context)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TitleContentModelCopyWith<$Res> implements $TitleContentModelCopyWith<$Res> {
+  factory _$TitleContentModelCopyWith(_TitleContentModel value, $Res Function(_TitleContentModel) _then) = __$TitleContentModelCopyWithImpl;
+@override @useResult
+$Res call({
+ String recognition, String motive, String active, String context
+});
+
+
+
+
+}
+/// @nodoc
+class __$TitleContentModelCopyWithImpl<$Res>
+    implements _$TitleContentModelCopyWith<$Res> {
+  __$TitleContentModelCopyWithImpl(this._self, this._then);
+
+  final _TitleContentModel _self;
+  final $Res Function(_TitleContentModel) _then;
+
+/// Create a copy of TitleContentModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? recognition = null,Object? motive = null,Object? active = null,Object? context = null,}) {
+  return _then(_TitleContentModel(
+recognition: null == recognition ? _self.recognition : recognition // ignore: cast_nullable_to_non_nullable
+as String,motive: null == motive ? _self.motive : motive // ignore: cast_nullable_to_non_nullable
+as String,active: null == active ? _self.active : active // ignore: cast_nullable_to_non_nullable
+as String,context: null == context ? _self.context : context // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
 mixin _$PlanModel {
 
 @JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'learning_id') int get learningId;@JsonKey(name: 'curriculum_id') int get curriculumId;@JsonKey(name: 'plan_id') int get planId; String get recognition; String get motive; String get active; String get context;
@@ -1809,7 +2410,7 @@ as String,
 /// @nodoc
 mixin _$SubmitModel {
 
-@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'learning_id') int get learningId;@JsonKey(name: 'curriculum_id') int get curriculumId;@JsonKey(name: 'submit_id') int get submitId; String? get video; String? get question;
+@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'learning_id') int get learningId;@JsonKey(name: 'curriculum_id') int get curriculumId;@JsonKey(name: 'submit_id') int get submitId; String? get video; String? get question; String? get answer;
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1822,16 +2423,16 @@ $SubmitModelCopyWith<SubmitModel> get copyWith => _$SubmitModelCopyWithImpl<Subm
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubmitModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.learningId, learningId) || other.learningId == learningId)&&(identical(other.curriculumId, curriculumId) || other.curriculumId == curriculumId)&&(identical(other.submitId, submitId) || other.submitId == submitId)&&(identical(other.video, video) || other.video == video)&&(identical(other.question, question) || other.question == question));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SubmitModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.learningId, learningId) || other.learningId == learningId)&&(identical(other.curriculumId, curriculumId) || other.curriculumId == curriculumId)&&(identical(other.submitId, submitId) || other.submitId == submitId)&&(identical(other.video, video) || other.video == video)&&(identical(other.question, question) || other.question == question)&&(identical(other.answer, answer) || other.answer == answer));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,learningId,curriculumId,submitId,video,question);
+int get hashCode => Object.hash(runtimeType,userId,learningId,curriculumId,submitId,video,question,answer);
 
 @override
 String toString() {
-  return 'SubmitModel(userId: $userId, learningId: $learningId, curriculumId: $curriculumId, submitId: $submitId, video: $video, question: $question)';
+  return 'SubmitModel(userId: $userId, learningId: $learningId, curriculumId: $curriculumId, submitId: $submitId, video: $video, question: $question, answer: $answer)';
 }
 
 
@@ -1842,7 +2443,7 @@ abstract mixin class $SubmitModelCopyWith<$Res>  {
   factory $SubmitModelCopyWith(SubmitModel value, $Res Function(SubmitModel) _then) = _$SubmitModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String? video, String? question
+@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String? video, String? question, String? answer
 });
 
 
@@ -1859,7 +2460,7 @@ class _$SubmitModelCopyWithImpl<$Res>
 
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = freezed,Object? question = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = freezed,Object? question = freezed,Object? answer = freezed,}) {
   return _then(_self.copyWith(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,learningId: null == learningId ? _self.learningId : learningId // ignore: cast_nullable_to_non_nullable
@@ -1867,6 +2468,7 @@ as int,curriculumId: null == curriculumId ? _self.curriculumId : curriculumId //
 as int,submitId: null == submitId ? _self.submitId : submitId // ignore: cast_nullable_to_non_nullable
 as int,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
 as String?,question: freezed == question ? _self.question : question // ignore: cast_nullable_to_non_nullable
+as String?,answer: freezed == answer ? _self.answer : answer // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -1952,10 +2554,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question,  String? answer)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SubmitModel() when $default != null:
-return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question);case _:
+return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question,_that.answer);case _:
   return orElse();
 
 }
@@ -1973,10 +2575,10 @@ return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question,  String? answer)  $default,) {final _that = this;
 switch (_that) {
 case _SubmitModel():
-return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question);case _:
+return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question,_that.answer);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1993,10 +2595,10 @@ return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'learning_id')  int learningId, @JsonKey(name: 'curriculum_id')  int curriculumId, @JsonKey(name: 'submit_id')  int submitId,  String? video,  String? question,  String? answer)?  $default,) {final _that = this;
 switch (_that) {
 case _SubmitModel() when $default != null:
-return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question);case _:
+return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,_that.video,_that.question,_that.answer);case _:
   return null;
 
 }
@@ -2008,7 +2610,7 @@ return $default(_that.userId,_that.learningId,_that.curriculumId,_that.submitId,
 @JsonSerializable()
 
 class _SubmitModel implements SubmitModel {
-  const _SubmitModel({@JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'learning_id') required this.learningId, @JsonKey(name: 'curriculum_id') required this.curriculumId, @JsonKey(name: 'submit_id') required this.submitId, this.video, this.question});
+  const _SubmitModel({@JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'learning_id') required this.learningId, @JsonKey(name: 'curriculum_id') required this.curriculumId, @JsonKey(name: 'submit_id') required this.submitId, this.video, this.question, this.answer});
   factory _SubmitModel.fromJson(Map<String, dynamic> json) => _$SubmitModelFromJson(json);
 
 @override@JsonKey(name: 'user_id') final  String userId;
@@ -2017,6 +2619,7 @@ class _SubmitModel implements SubmitModel {
 @override@JsonKey(name: 'submit_id') final  int submitId;
 @override final  String? video;
 @override final  String? question;
+@override final  String? answer;
 
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
@@ -2031,16 +2634,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubmitModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.learningId, learningId) || other.learningId == learningId)&&(identical(other.curriculumId, curriculumId) || other.curriculumId == curriculumId)&&(identical(other.submitId, submitId) || other.submitId == submitId)&&(identical(other.video, video) || other.video == video)&&(identical(other.question, question) || other.question == question));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SubmitModel&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.learningId, learningId) || other.learningId == learningId)&&(identical(other.curriculumId, curriculumId) || other.curriculumId == curriculumId)&&(identical(other.submitId, submitId) || other.submitId == submitId)&&(identical(other.video, video) || other.video == video)&&(identical(other.question, question) || other.question == question)&&(identical(other.answer, answer) || other.answer == answer));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,learningId,curriculumId,submitId,video,question);
+int get hashCode => Object.hash(runtimeType,userId,learningId,curriculumId,submitId,video,question,answer);
 
 @override
 String toString() {
-  return 'SubmitModel(userId: $userId, learningId: $learningId, curriculumId: $curriculumId, submitId: $submitId, video: $video, question: $question)';
+  return 'SubmitModel(userId: $userId, learningId: $learningId, curriculumId: $curriculumId, submitId: $submitId, video: $video, question: $question, answer: $answer)';
 }
 
 
@@ -2051,7 +2654,7 @@ abstract mixin class _$SubmitModelCopyWith<$Res> implements $SubmitModelCopyWith
   factory _$SubmitModelCopyWith(_SubmitModel value, $Res Function(_SubmitModel) _then) = __$SubmitModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String? video, String? question
+@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'learning_id') int learningId,@JsonKey(name: 'curriculum_id') int curriculumId,@JsonKey(name: 'submit_id') int submitId, String? video, String? question, String? answer
 });
 
 
@@ -2068,7 +2671,7 @@ class __$SubmitModelCopyWithImpl<$Res>
 
 /// Create a copy of SubmitModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = freezed,Object? question = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,Object? learningId = null,Object? curriculumId = null,Object? submitId = null,Object? video = freezed,Object? question = freezed,Object? answer = freezed,}) {
   return _then(_SubmitModel(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,learningId: null == learningId ? _self.learningId : learningId // ignore: cast_nullable_to_non_nullable
@@ -2076,6 +2679,7 @@ as int,curriculumId: null == curriculumId ? _self.curriculumId : curriculumId //
 as int,submitId: null == submitId ? _self.submitId : submitId // ignore: cast_nullable_to_non_nullable
 as int,video: freezed == video ? _self.video : video // ignore: cast_nullable_to_non_nullable
 as String?,question: freezed == question ? _self.question : question // ignore: cast_nullable_to_non_nullable
+as String?,answer: freezed == answer ? _self.answer : answer // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

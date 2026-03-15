@@ -42,6 +42,9 @@ _CurriculumDetailModel _$CurriculumDetailModelFromJson(
   placeholders: PlaceholdersModel.fromJson(
     json['placeholders'] as Map<String, dynamic>,
   ),
+  titles: json['titles'] == null
+      ? null
+      : TitlesModel.fromJson(json['titles'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$CurriculumDetailModelToJson(
@@ -53,6 +56,7 @@ Map<String, dynamic> _$CurriculumDetailModelToJson(
   'note': instance.note,
   'image': instance.image,
   'placeholders': instance.placeholders,
+  'titles': instance.titles,
 };
 
 _PlaceholdersModel _$PlaceholdersModelFromJson(Map<String, dynamic> json) =>
@@ -85,6 +89,32 @@ Map<String, dynamic> _$PlaceholderContentModelToJson(
   'active': instance.active,
   'context': instance.context,
 };
+
+_TitlesModel _$TitlesModelFromJson(Map<String, dynamic> json) => _TitlesModel(
+  plan: TitleContentModel.fromJson(json['plan'] as Map<String, dynamic>),
+  practice: TitleContentModel.fromJson(
+    json['practice'] as Map<String, dynamic>,
+  ),
+);
+
+Map<String, dynamic> _$TitlesModelToJson(_TitlesModel instance) =>
+    <String, dynamic>{'plan': instance.plan, 'practice': instance.practice};
+
+_TitleContentModel _$TitleContentModelFromJson(Map<String, dynamic> json) =>
+    _TitleContentModel(
+      recognition: json['recognition'] as String,
+      motive: json['motive'] as String,
+      active: json['active'] as String,
+      context: json['context'] as String,
+    );
+
+Map<String, dynamic> _$TitleContentModelToJson(_TitleContentModel instance) =>
+    <String, dynamic>{
+      'recognition': instance.recognition,
+      'motive': instance.motive,
+      'active': instance.active,
+      'context': instance.context,
+    };
 
 _PlanModel _$PlanModelFromJson(Map<String, dynamic> json) => _PlanModel(
   userId: json['user_id'] as String,
@@ -136,6 +166,7 @@ _SubmitModel _$SubmitModelFromJson(Map<String, dynamic> json) => _SubmitModel(
   submitId: (json['submit_id'] as num).toInt(),
   video: json['video'] as String?,
   question: json['question'] as String?,
+  answer: json['answer'] as String?,
 );
 
 Map<String, dynamic> _$SubmitModelToJson(_SubmitModel instance) =>
@@ -146,4 +177,5 @@ Map<String, dynamic> _$SubmitModelToJson(_SubmitModel instance) =>
       'submit_id': instance.submitId,
       'video': instance.video,
       'question': instance.question,
+      'answer': instance.answer,
     };

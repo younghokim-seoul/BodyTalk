@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 
 class InputSection extends StatelessWidget {
   final String title;
+  final String? descriptionText;
   final String hintText;
   final TextEditingController controller;
   final int maxLines;
@@ -14,6 +15,7 @@ class InputSection extends StatelessWidget {
   const InputSection({
     super.key,
     required this.title,
+    this.descriptionText,
     required this.hintText,
     required this.controller,
     this.maxLines = 5,
@@ -34,6 +36,9 @@ class InputSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasDescription =
+        descriptionText != null && descriptionText!.trim().isNotEmpty;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,9 +66,21 @@ class InputSection extends StatelessWidget {
                 ),
               ],
             ),
-            if (trailingTitle != null) trailingTitle!,
+            ?trailingTitle,
           ],
         ),
+        if (hasDescription) ...[
+          const Gap(8),
+          Text(
+            descriptionText!,
+            style: const TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w500,
+              height: 1.5,
+              color: AppColors.slate600,
+            ),
+          ),
+        ],
         const Gap(8),
         Stack(
           children: [
@@ -89,11 +106,7 @@ class InputSection extends StatelessWidget {
               ),
             ),
             if (suffixIcon != null)
-              Positioned(
-                bottom: 12,
-                right: 12,
-                child: suffixIcon!,
-              ),
+              Positioned(bottom: 12, right: 12, child: suffixIcon!),
           ],
         ),
       ],

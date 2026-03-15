@@ -6,7 +6,6 @@ import 'package:bodytalk/presentation/util/toast_helper.dart';
 import 'package:bodytalk/presentation/widget/button/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart' show Gap;
 
 class PlanTabView extends HookWidget {
@@ -39,6 +38,7 @@ class PlanTabView extends HookWidget {
     }, [_viewModel]);
 
     final planPlaceholders = detail.curriculum.placeholders.plan;
+    final planTitles = detail.curriculum.titles?.plan;
     final existingPlan = detail.plan;
 
     final recognitionController = useTextEditingController(
@@ -59,24 +59,28 @@ class PlanTabView extends HookWidget {
       children: [
         InputSection(
           title: '인지 계획',
+          descriptionText: planTitles?.recognition,
           hintText: planPlaceholders.recognition,
           controller: recognitionController,
         ),
         const Gap(24),
         InputSection(
           title: '동기 계획',
+          descriptionText: planTitles?.motive,
           hintText: planPlaceholders.motive,
           controller: motivationController,
         ),
         const Gap(24),
         InputSection(
           title: '행동 계획',
+          descriptionText: planTitles?.active,
           hintText: planPlaceholders.active,
           controller: actionController,
         ),
         const Gap(24),
         InputSection(
           title: '맥락 계획',
+          descriptionText: planTitles?.context,
           hintText: planPlaceholders.context,
           controller: contextPlanController,
         ),

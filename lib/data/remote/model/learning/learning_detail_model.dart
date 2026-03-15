@@ -25,6 +25,7 @@ abstract class CurriculumDetailModel with _$CurriculumDetailModel {
     required String note,
     required String image,
     required PlaceholdersModel placeholders,
+    TitlesModel? titles,
   }) = _CurriculumDetailModel;
 
   factory CurriculumDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -53,6 +54,30 @@ abstract class PlaceholderContentModel with _$PlaceholderContentModel {
 
   factory PlaceholderContentModel.fromJson(Map<String, dynamic> json) =>
       _$PlaceholderContentModelFromJson(json);
+}
+
+@freezed
+abstract class TitlesModel with _$TitlesModel {
+  const factory TitlesModel({
+    required TitleContentModel plan,
+    required TitleContentModel practice,
+  }) = _TitlesModel;
+
+  factory TitlesModel.fromJson(Map<String, dynamic> json) =>
+      _$TitlesModelFromJson(json);
+}
+
+@freezed
+abstract class TitleContentModel with _$TitleContentModel {
+  const factory TitleContentModel({
+    required String recognition,
+    required String motive,
+    required String active,
+    required String context,
+  }) = _TitleContentModel;
+
+  factory TitleContentModel.fromJson(Map<String, dynamic> json) =>
+      _$TitleContentModelFromJson(json);
 }
 
 @freezed
@@ -96,6 +121,7 @@ abstract class SubmitModel with _$SubmitModel {
     @JsonKey(name: 'submit_id') required int submitId,
     String? video,
     String? question,
+    String? answer,
   }) = _SubmitModel;
 
   factory SubmitModel.fromJson(Map<String, dynamic> json) =>
